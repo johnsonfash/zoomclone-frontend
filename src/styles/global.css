@@ -1,0 +1,175 @@
+:root {
+  --blue: #007bff;
+  --blue: #586fdb;
+  --blue: #0256af;
+  --brown: #2e2e2e;
+  --indigo: #6610f2;
+  --purple: #6f42c1;
+  --margin: 0;
+  --blueHover: rgb(208, 238, 247);
+  --blueHover2: rgb(244, 251, 253);
+  --marginTopHome: 10.3em;
+  --marginTopMarket: 6em;
+  --marginTopCart: 3.5em;
+  --marginTopSearch: 6.1em;
+  --marginTopCategory: 3.5em;
+  --pink: #e83e8c;
+  --red: #dc3545;
+  --orange: #fd7e14;
+  --yellow: #ffc107;
+  --green: #28a745;
+  --teal: #20c997;
+  --cyan: #17a2b8;
+  --white: #fff;
+  --light-green: #a3c922;
+  --light-purple: #a157ef;
+  --gray: #6c757d;
+  --light-grey: rgb(182, 182, 182);
+  --gray-dark: #343a40;
+  --grey-dark: #2b2d34;
+  --dark-dark: #1c2126;
+  --dark: #1c2126;
+  --primary: #007bff;
+  --secondary: #6c757d;
+  --success: #28a745;
+  --info: #17a2b8;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: #f8f9fa;
+  --dark: #343a40;
+  --background-border: #f2f2f2;
+  --background-color: #f2f2f2;
+  --background-color: #f6f6f6;
+  --background-color: #fefefe;
+  --xxs: 375px;
+  --xs: 420px;
+  --active: rgb(245, 251, 253);
+  --sm: 576px;
+  --md: 768px;
+  --lg: 992px;
+  --xl: 1200px;
+  --xxl: 1562px;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  scrollbar-width: thin;
+  scrollbar-color: grey lightgrey;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: var(--dark-dark);
+  color: white;
+}
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar:horizontal {
+  height: 2px;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:vertical {
+  background-color: grey;
+}
+::-webkit-scrollbar-track-piece {
+  background-color: lightgrey;
+}
+img {
+  display: inline-block;
+  max-width: 100%;
+  /* margin: auto; */
+  object-fit: cover;
+  max-height: 100%;
+}
+.buttonClick:active {
+  transform: translateY(1px);
+}
+* a {
+  color: inherit;
+  text-decoration: none;
+}
+.no-margin {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+  scrollbar-width: thin !important;
+  scroll-behavior: smooth;
+  scrollbar-color: var(--dark) grey !important;
+}
+
+details > summary {
+  list-style: none;
+}
+details > summary {
+  display: block;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details > summary::marker {
+  display: none;
+}
+
+.codeInput {
+  display: block;
+  /* margin: 2em auto; */
+  border: none;
+  padding: 0;
+  width: 5.9ch;
+  background: repeating-linear-gradient(
+      90deg,
+      dimgrey 0,
+      dimgrey 1ch,
+      transparent 0,
+      transparent 1.5ch
+    )
+    0 100%/5.9ch 2px no-repeat;
+  font: 4ch droid sans mono, consolas, monospace;
+  letter-spacing: 0.45ch;
+}
+.codeInput:focus {
+  outline: none;
+  /* color: var(--success); */
+}
+.passwordBox {
+  position: relative;
+}
+.passwordBox input.eyes {
+  padding-right: 35px;
+}
+.passwordBox input.image {
+  padding-left: 40px;
+}
+.passwordBox span.eyes,
+.passwordBox span.image {
+  display: inline-block;
+  position: absolute;
+  right: 7px;
+  cursor: pointer;
+  color: grey;
+  font-size: 1.2rem;
+  top: 15%;
+}
+.pointer {
+  cursor: pointer;
+}
+.pointer:hover {
+  opacity: 0.92;
+}
+.pointer2 {
+  cursor: pointer;
+}
+.passwordBox span.image {
+  right: auto;
+  left: 10px;
+  color: var(--blue);
+}
+
+.mainContainer {
+  max-width: var(--md);
+  margin: 0 auto;
+  padding: 0.7rem;
+}

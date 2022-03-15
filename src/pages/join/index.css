@@ -1,0 +1,149 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+.header .two {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.header .profContn {
+  position: relative;
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  object-fit: cover;
+  padding: 0;
+  margin: 0;
+  border-radius: 100%;
+}
+.header .three {
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  width: 41px;
+  height: 41px;
+  justify-content: center;
+  border: 2px solid rgb(255, 97, 97);
+  padding: 0;
+  margin: 0;
+}
+
+.meetingButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25vh;
+}
+.meetingButtons .button {
+  padding: 0.3rem;
+  background-color: #2f2e31;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  border: 2px solid grey;
+  border-radius: 2rem;
+  width: 45%;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+.meetingButtons .button:active {
+  background-color: #3b3b3b;
+  box-shadow: none;
+}
+
+.mLinks {
+  margin: 1rem 0;
+}
+.itemsContainer {
+  max-height: 48vh;
+  overflow-y: auto;
+}
+.mLinks .title {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.mLinks .items {
+  margin: 0.7rem 0.3rem 0.7rem 0;
+  background-color: var(--dark);
+  padding: 0.2rem 0.35rem;
+  display: flex;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  align-items: center;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 2rem;
+}
+.mLinks .items:active {
+  background-color: var(--grey-dark);
+  box-shadow: none;
+}
+.mLinks .items .no {
+  width: 35px;
+  height: 35px;
+  align-items: center;
+  display: inline-flex;
+  text-align: center;
+  user-select: none;
+  margin-right: 0.7rem;
+  font-weight: 600;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  justify-content: center;
+  background-color: grey;
+}
+.mLinks .items .link {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.mLinks .items .date {
+  font-size: 0.7rem;
+  user-select: none;
+}
+
+.linkCopy {
+  padding: 0.7rem;
+  margin: 0.5rem 0 1rem;
+}
+.linkCopy .linkC {
+  background-color: var(--dark);
+  border-radius: 2rem;
+  padding: 0.3rem 0.7rem;
+  display: flex;
+  margin-bottom: 0.7rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.linkCopy .link {
+  width: calc(100% - 45px);
+  display: flex;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+.linkCopy .copyButton {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  font-size: 1.1rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: grey;
+  text-align: center;
+}
+.linkCopy .copyButton:active {
+  background: var(--dark);
+  user-select: none;
+}
+.inputC input,
+.inputC button {
+  border-radius: 2rem;
+  margin-bottom: 0.7rem;
+  font-weight: 600;
+}
