@@ -31,7 +31,8 @@ var myID = getID();
 var peer = new Peer(undefined, {
   path: "/peerjs",
   host: "zuum-backend.herokuapp.com",
-  port: "38151",
+  secure: true,
+  port: "",
 });
 
 // const [people, setPeople] = useState(
