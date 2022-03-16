@@ -2,7 +2,6 @@ import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
@@ -15,7 +14,6 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
-import profile from "../../assets/profile.jpg";
 import BottomPanel from "../../components/bottomPanel";
 import { copy, ToastContainer } from "../../components/copyText";
 import FixedFooter from "../../components/fixedFooter";
