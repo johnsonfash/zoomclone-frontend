@@ -84,10 +84,21 @@ function RTC() {
       setTyping(data);
     });
 
-    socket.on("hangUp", (id) => {
+    // edited
+    socket.on("hangUp", (id, peerID) => {
       if (id === myID) {
         window.location.href = "/";
       } else {
+        //edited
+        for (let conns in peer.connections) {
+          peer.connections[conns].forEach((conn, i) => {
+            if (conn.peer === peerID) {
+              conn.peerConnection.close();
+              conn.close && conn.close();
+            }
+          });
+        }
+        //edited
         setPeople((prev) => {
           return prev.map((v) => v.id !== id);
         });
@@ -165,7 +176,8 @@ function RTC() {
     stream.getTracks().forEach(function (track) {
       track.stop();
     });
-    socket.emit("hangup", myID);
+    socket.emit("hangup", myID, peer.id);
+    // edited
     peer.destroy();
   };
 
