@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
 import { io } from "socket.io-client";
 import Peer from "peerjs";
-import image from "../../assets/profile.jpg";
+// import image from "../../assets/profile.jpg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Slider from "../../components/slider";
 import "./index.css";
