@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
 import { io } from "socket.io-client";
 import Peer from "peerjs";
-import image from "../../assets/profile.jpg";
+// import image from "../../assets/profile.jpg";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Slider from "../../components/slider";
 import "./index.css";
@@ -26,12 +26,12 @@ import { useRef } from "react";
 
 var timer;
 var addStream;
-var socket = io("http://localhost:5000/");
+var socket = io("https://zuum-backend.herokuapp.com/");
 var myID = getID();
 var peer = new Peer(undefined, {
   path: "/peerjs",
-  host: "localhost",
-  port: "5000",
+  host: "zuum-backend.herokuapp.com",
+  port: "38151",
 });
 
 // const [people, setPeople] = useState(
