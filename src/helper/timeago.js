@@ -101,4 +101,4 @@ class TimeFrame {
 }
 
 
-module.exports = new TimeFrame();
+export default new TimeFrame();
