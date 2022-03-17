@@ -70,7 +70,12 @@ function RTC() {
 
     peer.on("open", (peerID) => {
       console.log("peerjs opened connection");
-      socket.emit("join-room", url, peerID, getID(), getName());
+      socket.emit("join-room", {
+        roomId: url,
+        peerID,
+        userID: getID(),
+        userName: getName(),
+      });
       // startVideo();
       mediaStream((stream) => {
         setStream(stream);
@@ -111,8 +116,8 @@ function RTC() {
     });
 
     // edited
-    socket.on("hangUp", (id, peerID) => {
-      if (id === myID) {
+    socket.on("hangUp", ({ userID, peerID }) => {
+      if (userID === myID) {
         window.location.href = "/";
       } else {
         //edited
@@ -126,7 +131,7 @@ function RTC() {
         }
         //edited
         setPeople((prev) => {
-          return prev.map((v) => v.id !== id);
+          return prev.map((v) => v.id !== userID);
         });
       }
     });
@@ -211,7 +216,7 @@ function RTC() {
     stream.getTracks().forEach(function (track) {
       track.stop();
     });
-    socket.emit("hangup", myID, peer.id);
+    socket.emit("hangup", { userID: myID, peerID: peer.id });
     // edited
     peer.destroy();
   };
