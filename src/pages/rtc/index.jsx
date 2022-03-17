@@ -76,31 +76,34 @@ function RTC() {
         userID: getID(),
         userName: getName(),
       });
-      // startVideo();
-      mediaStream((stream) => {
-        setStream(stream);
-        mainVideo.current.srcObject = stream;
-        // addVideoStream(stream, myID, "Fashanu Tosin");
-        console.log("peerjs startVideo function");
-        peer.on("call", (call) => {
-          console.log("peerjs someone called in");
-          call.answer(stream);
-          call.on("stream", (userVideoStream) => {
-            console.log("peerjs call is been streamed");
-            addVideoStream(
-              userVideoStream,
-              call.metadata.userID,
-              call.metadata.userName
-            );
-          });
-        });
-        console.log("userConnected function to be called here");
-      });
-    });
-    
-    socket.on("userConnected", ({ peerID, userID, userName }) => {
-      console.log("peerjs user-connected");
-      connectToNewUser(peerID, stream, userID, userName);
+      startVideo();
+      // mediaStream((stream) => {
+      //   setStream(stream);
+      //   mainVideo.current.srcObject = stream;
+      //   // addVideoStream(stream, myID, "Fashanu Tosin");
+      //   console.log("peerjs startVideo function");
+      //   peer.on("call", (call) => {
+      //     console.log("peerjs someone called in");
+      //     call.answer(stream);
+      //     call.on("stream", (userVideoStream) => {
+      //       console.log("peerjs call is been streamed");
+      //       addVideoStream(
+      //         userVideoStream,
+      //         call.metadata.userID,
+      //         call.metadata.userName
+      //       );
+      //     });
+
+      //     // call.on("close", () => {
+      //     //   removeVideoStream
+      //     // });
+      //   });
+      //   console.log("userConnected function to be called here");
+      //   socket.on("userConnected", ({ peerID, userID, userName }) => {
+      //     console.log("peerjs user-connected");
+      //     connectToNewUser(peerID, stream, userID, userName);
+      //   });
+      // });
     });
 
     socket.on("newMessage", (data) => {
@@ -121,7 +124,7 @@ function RTC() {
       if (userID === myID) {
         window.location.href = "/";
       } else {
-        //edited
+        // edited 
         for (let conns in peer.connections) {
           peer.connections[conns].forEach((conn, i) => {
             if (conn.peer === peerID) {
