@@ -71,7 +71,30 @@ function RTC() {
     peer.on("open", (peerID) => {
       console.log("peerjs opened connection");
       socket.emit("join-room", url, peerID, getID(), getName());
-      startVideo();
+      // startVideo();
+      mediaStream((stream) => {
+        setStream(stream);
+        mainVideo.current.srcObject = stream;
+        // addVideoStream(stream, myID, "Fashanu Tosin");
+        console.log("peerjs startVideo function");
+        peer.on("call", (call) => {
+          console.log("peerjs someone called in");
+          call.answer(stream);
+          call.on("stream", (userVideoStream) => {
+            console.log("peerjs call is been streamed");
+            addVideoStream(
+              userVideoStream,
+              call.metadata.userID,
+              call.metadata.userName
+            );
+          });
+        });
+        console.log("userConnected function to be called here");
+        socket.on("userConnected", ({ peerID, userID, userName }) => {
+          console.log("peerjs user-connected");
+          connectToNewUser(peerID, stream, userID, userName);
+        });
+      });
     });
 
     socket.on("newMessage", (data) => {
