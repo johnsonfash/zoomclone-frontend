@@ -110,18 +110,16 @@ function RTC() {
   }, []);
 
   const startVideo = () => {
-    console.log("peerjs startVideo function");
     mediaStream((stream) => {
       setStream(stream);
       mainVideo.current.srcObject = stream;
       // addVideoStream(stream, myID, "Fashanu Tosin");
+      console.log("peerjs startVideo function");
       peer.on("call", (call) => {
         console.log("peerjs someone called in");
-
         call.answer(stream);
         call.on("stream", (userVideoStream) => {
           console.log("peerjs call is been streamed");
-
           addVideoStream(
             userVideoStream,
             call.metadata.userID,
@@ -130,6 +128,7 @@ function RTC() {
         });
       });
       socket.on("user-connected", (peerID, userID, userName) => {
+        console.log("peerjs user-connected");
         connectToNewUser(peerID, stream, userID, userName);
       });
     });
