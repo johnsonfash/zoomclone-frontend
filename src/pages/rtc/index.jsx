@@ -95,11 +95,12 @@ function RTC() {
           });
         });
         console.log("userConnected function to be called here");
-        socket.on("userConnected", ({ peerID, userID, userName }) => {
-          console.log("peerjs user-connected");
-          connectToNewUser(peerID, stream, userID, userName);
-        });
       });
+    });
+    
+    socket.on("userConnected", ({ peerID, userID, userName }) => {
+      console.log("peerjs user-connected");
+      connectToNewUser(peerID, stream, userID, userName);
     });
 
     socket.on("newMessage", (data) => {
