@@ -127,8 +127,8 @@ function RTC() {
           );
         });
       });
-      console.log('user-connected function to be called here')
-      socket.on("user-connected", (peerID, userID, userName) => {
+      console.log("userConnected function to be called here");
+      socket.on("userConnected", ({ peerID, userID, userName }) => {
         console.log("peerjs user-connected");
         connectToNewUser(peerID, stream, userID, userName);
       });
