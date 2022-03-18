@@ -29,8 +29,6 @@ var addStream;
 var socket = openSocket("https://zuum-backend.herokuapp.com", {
   secure: true,
   reconnection: true,
-  rejectUnauthorized: false,
-  reconnectionAttempts: 10,
 });
 
 var myID = getID();
