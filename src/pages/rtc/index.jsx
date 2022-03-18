@@ -11,7 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
-// import { io } from "socket.io-client";
+import { io } from "socket.io-client";
 import Peer from "peerjs";
 // import image from "../../assets/profile.jpg";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -26,7 +26,7 @@ import { useRef } from "react";
 
 var timer;
 var addStream;
-var socket = window.io("https://zuum-backend.herokuapp.com");
+var socket = io("https://zuum-backend.herokuapp.com");
 
 var myID = getID();
 var peer = new Peer(undefined, {
