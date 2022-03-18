@@ -26,7 +26,7 @@ import { useRef } from "react";
 
 var timer;
 var addStream;
-var socket = window.io("/");
+var socket = window.io("https://zuum-backend.herokuapp.com");
 
 var myID = getID();
 var peer = new Peer(undefined, {
