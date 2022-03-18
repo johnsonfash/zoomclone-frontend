@@ -11,7 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
-import openSocket from "socket.io-client";
+import { io } from "socket.io-client";
 import Peer from "peerjs";
 // import image from "../../assets/profile.jpg";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -26,11 +26,7 @@ import { useRef } from "react";
 
 var timer;
 var addStream;
-var socket = openSocket("https://zuum-backend.herokuapp.com", {
-  secure: true,
-  reconnection: true,
-});
-
+var socket = io("https://zuum-backend.herokuapp.com/");
 var myID = getID();
 var peer = new Peer(undefined, {
   path: "/peerjs",
@@ -66,48 +62,14 @@ function RTC() {
   const [people, setPeople] = useState([]);
 
   useEffect(() => {
-    console.log(socket);
     if (!isRegistered() || !url.match(/[\d\w]{4}-[\d\w]{4}-[\d\w]{4}/)) {
       navigate("/");
       return;
     }
 
     peer.on("open", (peerID) => {
-      console.log("peerjs opened connection");
-      socket.emit("join-room", {
-        roomId: url,
-        peerID,
-        userID: getID(),
-        userName: getName(),
-      });
+      socket.emit("join-room", url, peerID, getID(), getName());
       startVideo();
-      // mediaStream((stream) => {
-      //   setStream(stream);
-      //   mainVideo.current.srcObject = stream;
-      //   // addVideoStream(stream, myID, "Fashanu Tosin");
-      //   console.log("peerjs startVideo function");
-      //   peer.on("call", (call) => {
-      //     console.log("peerjs someone called in");
-      //     call.answer(stream);
-      //     call.on("stream", (userVideoStream) => {
-      //       console.log("peerjs call is been streamed");
-      //       addVideoStream(
-      //         userVideoStream,
-      //         call.metadata.userID,
-      //         call.metadata.userName
-      //       );
-      //     });
-
-      //     // call.on("close", () => {
-      //     //   removeVideoStream
-      //     // });
-      //   });
-      //   console.log("userConnected function to be called here");
-      //   socket.on("userConnected", ({ peerID, userID, userName }) => {
-      //     console.log("peerjs user-connected");
-      //     connectToNewUser(peerID, stream, userID, userName);
-      //   });
-      // });
     });
 
     socket.on("newMessage", (data) => {
@@ -124,11 +86,11 @@ function RTC() {
     });
 
     // edited
-    socket.on("hangUp", ({ userID, peerID }) => {
-      if (userID === myID) {
+    socket.on("hangUp", (id, peerID) => {
+      if (id === myID) {
         window.location.href = "/";
       } else {
-        // edited
+        //edited
         for (let conns in peer.connections) {
           peer.connections[conns].forEach((conn, i) => {
             if (conn.peer === peerID) {
@@ -139,7 +101,7 @@ function RTC() {
         }
         //edited
         setPeople((prev) => {
-          return prev.map((v) => v.id !== userID);
+          return prev.map((v) => v.id !== id);
         });
       }
     });
@@ -150,12 +112,9 @@ function RTC() {
       setStream(stream);
       mainVideo.current.srcObject = stream;
       // addVideoStream(stream, myID, "Fashanu Tosin");
-      console.log("peerjs startVideo function");
       peer.on("call", (call) => {
-        console.log("peerjs someone called in");
         call.answer(stream);
         call.on("stream", (userVideoStream) => {
-          console.log("peerjs call is been streamed");
           addVideoStream(
             userVideoStream,
             call.metadata.userID,
@@ -163,9 +122,7 @@ function RTC() {
           );
         });
       });
-      console.log("userConnected function to be called here");
-      socket.on("userConnected", ({ peerID, userID, userName }) => {
-        console.log("peerjs user-connected");
+      socket.on("user-connected", (peerID, userID, userName) => {
         connectToNewUser(peerID, stream, userID, userName);
       });
     });
@@ -173,8 +130,6 @@ function RTC() {
 
   // ref: (e) => (otherVideos.current[prev.length] = e)
   const addVideoStream = (stream, userID, userName) => {
-    console.log("peerjs video element is been added");
-
     setPeople((prev) => {
       return [
         ...prev,
@@ -192,8 +147,6 @@ function RTC() {
       metadata: { peerID, userID, userName },
     });
     call.on("stream", (remoteStream) => {
-      console.log("peerjs new user is been connected");
-
       addVideoStream(remoteStream, userID, userName);
     });
   };
@@ -224,7 +177,7 @@ function RTC() {
     stream.getTracks().forEach(function (track) {
       track.stop();
     });
-    socket.emit("hangup", { userID: myID, peerID: peer.id });
+    socket.emit("hangup", myID, peer.id);
     // edited
     peer.destroy();
   };
@@ -240,7 +193,7 @@ function RTC() {
 
   const sendText = (e) => {
     e.preventDefault();
-    socket.emit("message", { ...getUser(), image:"" , message: text });
+    socket.emit("message", { ...getUser(), message: text });
     socket.emit("typing", false);
     setText("");
   };
