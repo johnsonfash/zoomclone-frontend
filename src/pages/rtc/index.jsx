@@ -11,7 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 import Peer from "peerjs";
 // import image from "../../assets/profile.jpg";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -26,7 +26,7 @@ import { useRef } from "react";
 
 var timer;
 var addStream;
-var socket = io("https://zuum-backend.herokuapp.com");
+var socket = window.io("/");
 
 var myID = getID();
 var peer = new Peer(undefined, {
@@ -63,6 +63,7 @@ function RTC() {
   const [people, setPeople] = useState([]);
 
   useEffect(() => {
+    console.log(socket)
     if (!isRegistered() || !url.match(/[\d\w]{4}-[\d\w]{4}-[\d\w]{4}/)) {
       navigate("/");
       return;
