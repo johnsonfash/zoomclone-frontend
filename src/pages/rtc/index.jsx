@@ -127,8 +127,8 @@ function RTC() {
           );
         });
       });
-      console.log('user-connected function to be called here')
-      socket.on("user-connected", (peerID, userID, userName) => {
+      console.log("userConnected function to be called here");
+      socket.on("userConnected", (peerID, userID, userName) => {
         console.log("peerjs user-connected");
         connectToNewUser(peerID, stream, userID, userName);
       });
@@ -204,7 +204,7 @@ function RTC() {
 
   const sendText = (e) => {
     e.preventDefault();
-    socket.emit("message", { ...getUser(), message: text });
+    socket.emit("message", { ...getUser(), image: "", message: text });
     socket.emit("typing", false);
     setText("");
   };
