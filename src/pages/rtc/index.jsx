@@ -26,7 +26,8 @@ import { useRef } from "react";
 
 var timer;
 var addStream;
-var socket = io("https://zuum-backend.herokuapp.com/");
+var socket = io("https://zuum-backend.herokuapp.com");
+
 var myID = getID();
 var peer = new Peer(undefined, {
   path: "/peerjs",
@@ -68,6 +69,7 @@ function RTC() {
     }
 
     peer.on("open", (peerID) => {
+      console.log("peerjs opened connection");
       socket.emit("join-room", url, peerID, getID(), getName());
       startVideo();
     });
@@ -112,9 +114,12 @@ function RTC() {
       setStream(stream);
       mainVideo.current.srcObject = stream;
       // addVideoStream(stream, myID, "Fashanu Tosin");
+      console.log("peerjs startVideo function");
       peer.on("call", (call) => {
+        console.log("peerjs someone called in");
         call.answer(stream);
         call.on("stream", (userVideoStream) => {
+          console.log("peerjs call is been streamed");
           addVideoStream(
             userVideoStream,
             call.metadata.userID,
@@ -122,7 +127,9 @@ function RTC() {
           );
         });
       });
+      console.log('user-connected function to be called here')
       socket.on("user-connected", (peerID, userID, userName) => {
+        console.log("peerjs user-connected");
         connectToNewUser(peerID, stream, userID, userName);
       });
     });
@@ -130,6 +137,8 @@ function RTC() {
 
   // ref: (e) => (otherVideos.current[prev.length] = e)
   const addVideoStream = (stream, userID, userName) => {
+    console.log("peerjs video element is been added");
+
     setPeople((prev) => {
       return [
         ...prev,
@@ -147,6 +156,8 @@ function RTC() {
       metadata: { peerID, userID, userName },
     });
     call.on("stream", (remoteStream) => {
+      console.log("peerjs new user is been connected");
+
       addVideoStream(remoteStream, userID, userName);
     });
   };
