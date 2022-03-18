@@ -240,7 +240,7 @@ function RTC() {
 
   const sendText = (e) => {
     e.preventDefault();
-    socket.emit("message", { ...getUser(), message: text });
+    socket.emit("message", { ...getUser(), image:"" , message: text });
     socket.emit("typing", false);
     setText("");
   };
