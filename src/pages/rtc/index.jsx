@@ -47,7 +47,6 @@ function RTC() {
   const navigate = useNavigate();
   const [myPeerID, setMyPeerID] = useState("");
   const [stream, setStream] = useState({});
-  const [imageArray, setImageArray] = useState([]);
   const [mute, setMute] = useState(false);
   const [isStreaming, setIsStreaming] = useState(true);
   const [text, setText] = useState("");
@@ -74,8 +73,8 @@ function RTC() {
 
     socket.on("newMessage", (data) => {
       setChats((prev) => {
-        const userImage = imageArray.find((p) => p.id === data.id);
-        console.log(imageArray);
+        const userImage = people.find((p) => p.id === data.id);
+        console.log(people);
         console.log(data);
         if (userImage) {
           data.image = userImage.image;
@@ -153,13 +152,6 @@ function RTC() {
         },
       ];
     });
-    setImageArray((prev) => [
-      ...prev,
-      {
-        image: userImage,
-        id: userID,
-      },
-    ]);
   };
 
   const connectToNewUser = (peerID, stream, userID, userName, userImage) => {
