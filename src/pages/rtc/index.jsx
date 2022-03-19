@@ -134,6 +134,15 @@ function RTC() {
         });
       });
       socket.on("userConnected", ({ peerID, userID, userName, userImage }) => {
+        setImageArray((prev) => {
+          return [
+            ...prev,
+            {
+              image: userImage,
+              id: userID,
+            },
+          ];
+        });
         connectToNewUser(peerID, stream, userID, userName, userImage);
       });
     });
@@ -141,15 +150,6 @@ function RTC() {
 
   // ref: (e) => (otherVideos.current[prev.length] = e)
   const addVideoStream = (stream, peerID, userID, userName, userImage) => {
-    setImageArray((prev) => {
-      return [
-        ...prev,
-        {
-          image: userImage,
-          id: userID,
-        },
-      ];
-    });
     setPeople((prev) => {
       return [
         ...prev,
