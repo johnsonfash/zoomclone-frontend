@@ -30,7 +30,7 @@ function Slider({ item, className, imageStructureClass, imageClass, style, onCha
               <span className="videoDot active">•</span>
               <span className={imageClass} style={{ ...imageStyle, display: "inline-block", overflow: "hidden" }}>
                 {
-                  data.image ?
+                  !data.stream ?
                     <img id={data.id} alt="" src={data.image} /> :
                     <Video id={data.id} stream={data.stream} />
                 }
