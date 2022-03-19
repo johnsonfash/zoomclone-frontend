@@ -71,8 +71,8 @@ function RTC() {
       startVideo();
     });
 
-    socket.on("newMessage", (data) => {
-      let allPeople = people;
+    socket.on("newMessage", async (data) => {
+      let allPeople = await people;
       setChats((prev) => {
         const userImage = allPeople.find((p) => p.id === data.id);
         console.log(allPeople);
