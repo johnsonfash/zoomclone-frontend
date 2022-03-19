@@ -159,6 +159,7 @@ function RTC() {
     const call = peer.call(userID, stream, {
       metadata: { peerID, userID, userName },
     });
+    console.log("connected to new user stream");
     call.on("stream", (remoteStream) => {
       console.log("peerjs new user is been connected");
       addVideoStream(remoteStream, userID, userName);
