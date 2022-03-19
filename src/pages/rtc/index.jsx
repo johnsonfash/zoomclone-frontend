@@ -157,7 +157,8 @@ function RTC() {
   };
 
   const connectToNewUser = (peerID, stream, userID, userName) => {
-    const call = peer.call(userID, stream, {
+    const call = peer.call(peerID, stream, {
+      // const call = peer.call(userID, stream, {
       metadata: { peerID, userID, userName },
     });
     console.log("connected to new user stream");
