@@ -74,7 +74,8 @@ function RTC() {
     socket.on("newMessage", (data) => {
       setChats((prev) => {
         const userImage = people.find((p) => p.userID === data.id);
-        data.image = userImage.image;
+        console.log(userImage);
+        // data.image = userImage.image;
         return [...prev, data];
       });
       setTimeout(() => {
