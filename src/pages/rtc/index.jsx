@@ -47,6 +47,7 @@ function RTC() {
   const navigate = useNavigate();
   const [myPeerID, setMyPeerID] = useState("");
   const [stream, setStream] = useState({});
+  const [imageArray, setImageArray] = useState([]);
   const [mute, setMute] = useState(false);
   const [isStreaming, setIsStreaming] = useState(true);
   const [text, setText] = useState("");
@@ -71,11 +72,10 @@ function RTC() {
       startVideo();
     });
 
-    socket.on("newMessage", async (data) => {
-      let allPeople = await people;
+    socket.on("newMessage", (data) => {
       setChats((prev) => {
-        const userImage = allPeople.find((p) => p.id === data.id);
-        console.log(allPeople);
+        const userImage = imageArray.find((p) => p.id === data.id);
+        console.log(imageArray);
         console.log(data);
         if (userImage) {
           data.image = userImage.image;
@@ -141,6 +141,15 @@ function RTC() {
 
   // ref: (e) => (otherVideos.current[prev.length] = e)
   const addVideoStream = (stream, peerID, userID, userName, userImage) => {
+    setImageArray((prev) => {
+      return [
+        ...prev,
+        {
+          image: userImage,
+          id: userID,
+        },
+      ];
+    });
     setPeople((prev) => {
       return [
         ...prev,
