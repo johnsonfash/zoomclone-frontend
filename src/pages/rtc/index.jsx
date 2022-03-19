@@ -130,6 +130,7 @@ function RTC() {
       console.log("userConnected function to be called here");
       socket.on("userConnected", ({ peerID, userID, userName }) => {
         console.log("peerjs user-connected");
+        console.log(peerID, userID, userName);
         connectToNewUser(peerID, stream, userID, userName);
       });
     });
