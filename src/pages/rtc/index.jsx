@@ -134,19 +134,6 @@ function RTC() {
         });
       });
       socket.on("userConnected", ({ peerID, userID, userName, userImage }) => {
-        console.log('userConnected',{
-          image: userImage,
-          id: userID,
-        });
-        setImageArray((prev) => {
-          return [
-            ...prev,
-            {
-              image: userImage,
-              id: userID,
-            },
-          ];
-        });
         connectToNewUser(peerID, stream, userID, userName, userImage);
       });
     });
@@ -163,6 +150,19 @@ function RTC() {
           peer: peerID,
           name: userName,
           image: userImage,
+        },
+      ];
+    });
+    console.log("userConnected", {
+      image: userImage,
+      id: userID,
+    });
+    setImageArray((prev) => {
+      return [
+        ...prev,
+        {
+          image: userImage,
+          id: userID,
         },
       ];
     });
