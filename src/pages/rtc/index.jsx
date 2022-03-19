@@ -53,6 +53,7 @@ function RTC() {
   let mainVideo = useRef();
   let chatScreen = useRef();
   const navigate = useNavigate();
+  const [myPeerID, setMyPeerID] = useState("");
   const [stream, setStream] = useState({});
   const [mute, setMute] = useState(false);
   const [isStreaming, setIsStreaming] = useState(true);
@@ -74,6 +75,7 @@ function RTC() {
 
     peer.on("open", (peerID) => {
       socket.emit("join-room", url, peerID, getID(), getName());
+      setMyPeerID(peerID);
       startVideo();
     });
 
@@ -119,6 +121,7 @@ function RTC() {
       peer.on("call", (call) => {
         call.answer(stream);
         call.on("stream", (userVideoStream) => {
+          console.log("mediaStream addVideoStream");
           addVideoStream(
             userVideoStream,
             call.metadata.userID,
@@ -148,11 +151,12 @@ function RTC() {
 
   const connectToNewUser = (peerID, stream, userID, userName) => {
     const call = peer.call(peerID, stream, {
-      metadata: { peerID, userID, userName: getName() },
+      metadata: { peerID: myPeerID, userID: getID(), userName: getName() },
     });
     let id;
     call.on("stream", (remoteStream) => {
       if (id !== remoteStream.id) {
+        console.log("connectToNewUser addVideoStream");
         addVideoStream(remoteStream, userID, userName);
         id = remoteStream.id;
       }
