@@ -20,7 +20,7 @@ import "./index.css";
 import { useState } from "react";
 import ChatScreen from "../../components/chatScreen";
 import { getID, getName, getUser, isRegistered } from "../../services/auth";
-import { copy, ToastContainer } from "../../components/copyText";
+import { copy, error, ToastContainer } from "../../components/copyText";
 import { mediaStream } from "../../helper/rtc/utils";
 import { useRef } from "react";
 
@@ -70,7 +70,8 @@ function RTC() {
     }
 
     peer.on("error", (err) => {
-      console.log(err);
+      // console.log(err.type);
+      error(err.type)
     });
 
     peer.on("open", (peerID) => {
@@ -158,7 +159,6 @@ function RTC() {
     let id;
     call.on("stream", (remoteStream) => {
       if (id !== remoteStream.id) {
-        console.log("connectToNewUser addVideoStream");
         addVideoStream(remoteStream, userID, userName);
         id = remoteStream.id;
       }

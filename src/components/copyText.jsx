@@ -5,6 +5,10 @@ export const copy = (text) => {
   toast.success("Copied to clipboard");
 };
 
+export const error = (text) => {
+  toast.error(`Error: ${text}`);
+};
+
 export const ToastContainer = () => (
   <Toaster
     toastOptions={{
