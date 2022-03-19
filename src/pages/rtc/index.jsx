@@ -129,6 +129,7 @@ function RTC() {
               call.metadata.userID,
               call.metadata.userName
             );
+            id = userVideoStream.id;
           }
         });
       });
