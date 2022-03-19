@@ -135,7 +135,7 @@ function RTC() {
       socket.on("userConnected", ({ peerID, userID, userName }) => {
         console.log("peerjs user-connected");
         console.log(peerID, userID, userName)
-        connectToNewUser(peerID, stream, userID, userName);
+        // connectToNewUser(peerID, stream, userID, userName);
       });
     });
   };
