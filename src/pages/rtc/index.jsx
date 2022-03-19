@@ -19,15 +19,19 @@ import Slider from "../../components/slider";
 import "./index.css";
 import { useState } from "react";
 import ChatScreen from "../../components/chatScreen";
-import { getID, getName, getUser, isRegistered } from "../../services/auth";
+import {
+  getID,
+  getImage,
+  getName,
+  getUser,
+  isRegistered,
+} from "../../services/auth";
 import { copy, error, ToastContainer } from "../../components/copyText";
 import { mediaStream } from "../../helper/rtc/utils";
 import { useRef } from "react";
 
 var timer;
-var addStream;
 var socket = io("https://zuum-backend.herokuapp.com");
-
 var myID = getID();
 var peer = new Peer(undefined, {
   path: "/peerjs",
@@ -35,18 +39,6 @@ var peer = new Peer(undefined, {
   secure: true,
   port: "",
 });
-
-// const [people, setPeople] = useState(
-//   Array(6)
-//     .fill(0)
-//     .map((i, n) => {
-//       return {
-//         ref: (e) => (otherVideos.current[n] = e),
-//         id: n,
-//         name: "Sarah Bondo",
-//       };
-//     })
-// );
 
 function RTC() {
   const url = useParams().id;
@@ -70,18 +62,19 @@ function RTC() {
     }
 
     peer.on("error", (err) => {
-      // console.log(err.type);
       error(err.type);
     });
 
     peer.on("open", (peerID) => {
-      socket.emit("join-room", url, peerID, getID(), getName());
+      socket.emit("join-room", url, peerID, getID(), getName(), getImage());
       setMyPeerID(peerID);
       startVideo();
     });
 
     socket.on("newMessage", (data) => {
       setChats((prev) => {
+        const userImage = people.find((p) => p.userID === data.id);
+        data.image = userImage.image;
         return [...prev, data];
       });
       setTimeout(() => {
@@ -128,20 +121,21 @@ function RTC() {
               userVideoStream,
               call.metadata.peerID,
               call.metadata.userID,
-              call.metadata.userName
+              call.metadata.userName,
+              call.metadata.image
             );
             id = userVideoStream.id;
           }
         });
       });
-      socket.on("userConnected", ({ peerID, userID, userName }) => {
-        connectToNewUser(peerID, stream, userID, userName);
+      socket.on("userConnected", ({ peerID, userID, userName, userImage }) => {
+        connectToNewUser(peerID, stream, userID, userName, userImage);
       });
     });
   };
 
   // ref: (e) => (otherVideos.current[prev.length] = e)
-  const addVideoStream = (stream, peerID, userID, userName) => {
+  const addVideoStream = (stream, peerID, userID, userName, userImage) => {
     setPeople((prev) => {
       return [
         ...prev,
@@ -150,19 +144,25 @@ function RTC() {
           stream,
           peer: peerID,
           name: userName,
+          image: userImage,
         },
       ];
     });
   };
 
-  const connectToNewUser = (peerID, stream, userID, userName) => {
+  const connectToNewUser = (peerID, stream, userID, userName, userImage) => {
     const call = peer.call(peerID, stream, {
-      metadata: { peerID: myPeerID, userID: getID(), userName: getName() },
+      metadata: {
+        peerID: myPeerID,
+        userID: getID(),
+        userName: getName(),
+        userImage: getImage(),
+      },
     });
     let id;
     call.on("stream", (remoteStream) => {
       if (id !== remoteStream.id) {
-        addVideoStream(remoteStream, peerID, userID, userName);
+        addVideoStream(remoteStream, peerID, userID, userName, userImage);
         id = remoteStream.id;
       }
     });
