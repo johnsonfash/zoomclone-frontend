@@ -5,7 +5,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
-import image from "../assets/profile.jpg";
+import image from "../assets/placeholder.jpg";
 import { Button, Form, Input } from "reactstrap";
 import { useState } from "react";
 
@@ -34,7 +34,7 @@ function ChatScreen({
   }, [chats]);
 
   useEffect(() => {
-    setParticipant(people ? people+1 : 1);
+    setParticipant(people ? people + 1 : 1);
   }, [people]);
 
   useEffect(() => {
@@ -63,7 +63,10 @@ function ChatScreen({
               <div key={idx} className={`item ${chat.id === userID && "you"}`}>
                 {chat.id !== userID && (
                   <div className="imageContainer">
-                    <img src={chat.image} alt="" />
+                    <img
+                      src={chat.image === "none" ? image : chat.image}
+                      alt=""
+                    />
                   </div>
                 )}
                 <div className="chatBody">
