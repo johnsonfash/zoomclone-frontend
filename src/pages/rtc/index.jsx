@@ -71,7 +71,7 @@ function RTC() {
 
     peer.on("error", (err) => {
       // console.log(err.type);
-      error(err.type)
+      error(err.type);
     });
 
     peer.on("open", (peerID) => {
