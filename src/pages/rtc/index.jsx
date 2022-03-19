@@ -124,6 +124,7 @@ function RTC() {
         call.answer(stream);
         call.on("stream", (userVideoStream) => {
           console.log("peerjs call is been streamed");
+          console.log('media function - addVideoStream')
           addVideoStream(
             userVideoStream,
             call.metadata.userID,
@@ -134,8 +135,9 @@ function RTC() {
       console.log("userConnected function to be called here");
       socket.on("userConnected", ({ peerID, userID, userName }) => {
         console.log("peerjs user-connected");
-        console.log(peerID, userID, userName)
-        // connectToNewUser(peerID, stream, userID, userName);
+        console.log(peerID, userID, userName);
+        console.log('media function - connecttonewuser')
+        connectToNewUser(peerID, stream, userID, userName);
       });
     });
   };
@@ -163,6 +165,7 @@ function RTC() {
     });
     console.log("connected to new user stream");
     call.on("stream", (remoteStream) => {
+      console.log('media function - connecttonewuser on stream')
       console.log("peerjs new user is been connected");
       addVideoStream(remoteStream, userID, userName);
     });
