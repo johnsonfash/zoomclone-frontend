@@ -150,10 +150,13 @@ function RTC() {
     const call = peer.call(peerID, stream, {
       metadata: { peerID, userID, userName },
     });
+    let id;
     call.on("stream", (remoteStream) => {
       console.log(call.metadata);
-      console.log(getUser());
-      addVideoStream(remoteStream, userID, userName);
+      if (id !== remoteStream.id) {
+        addVideoStream(remoteStream, userID, userName);
+        id = remoteStream.id;
+      }
     });
   };
 
