@@ -153,19 +153,13 @@ function RTC() {
         },
       ];
     });
-    console.log("userConnected", {
-      image: userImage,
-      id: userID,
-    });
-    setImageArray((prev) => {
-      return [
-        ...prev,
-        {
-          image: userImage,
-          id: userID,
-        },
-      ];
-    });
+    setImageArray((prev) => [
+      ...prev,
+      {
+        image: userImage,
+        id: userID,
+      },
+    ]);
   };
 
   const connectToNewUser = (peerID, stream, userID, userName, userImage) => {
