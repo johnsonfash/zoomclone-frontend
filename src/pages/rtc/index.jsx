@@ -134,6 +134,10 @@ function RTC() {
         });
       });
       socket.on("userConnected", ({ peerID, userID, userName, userImage }) => {
+        console.log({
+          image: userImage,
+          id: userID,
+        });
         setImageArray((prev) => {
           return [
             ...prev,
