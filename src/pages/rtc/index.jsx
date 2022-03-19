@@ -73,7 +73,6 @@ function RTC() {
     });
 
     peer.on("open", (peerID) => {
-      console.log("peerjs opened connection");
       socket.emit("join-room", url, peerID, getID(), getName());
       startVideo();
     });
@@ -117,14 +116,9 @@ function RTC() {
     mediaStream((stream) => {
       setStream(stream);
       mainVideo.current.srcObject = stream;
-      // addVideoStream(stream, myID, "Fashanu Tosin");
-      console.log("peerjs startVideo function");
       peer.on("call", (call) => {
-        console.log("peerjs someone called in");
         call.answer(stream);
         call.on("stream", (userVideoStream) => {
-          console.log("peerjs call is been streamed");
-          console.log('media function - addVideoStream')
           addVideoStream(
             userVideoStream,
             call.metadata.userID,
@@ -132,11 +126,7 @@ function RTC() {
           );
         });
       });
-      console.log("userConnected function to be called here");
       socket.on("userConnected", ({ peerID, userID, userName }) => {
-        console.log("peerjs user-connected");
-        console.log(peerID, userID, userName);
-        console.log('media function - connecttonewuser')
         connectToNewUser(peerID, stream, userID, userName);
       });
     });
@@ -144,8 +134,6 @@ function RTC() {
 
   // ref: (e) => (otherVideos.current[prev.length] = e)
   const addVideoStream = (stream, userID, userName) => {
-    console.log("peerjs video element is been added");
-
     setPeople((prev) => {
       return [
         ...prev,
@@ -160,13 +148,11 @@ function RTC() {
 
   const connectToNewUser = (peerID, stream, userID, userName) => {
     const call = peer.call(peerID, stream, {
-      // const call = peer.call(userID, stream, {
       metadata: { peerID, userID, userName },
     });
-    console.log("connected to new user stream");
     call.on("stream", (remoteStream) => {
-      console.log('media function - connecttonewuser on stream')
-      console.log("peerjs new user is been connected");
+      console.log(call.metadata);
+      console.log(getUser());
       addVideoStream(remoteStream, userID, userName);
     });
   };
