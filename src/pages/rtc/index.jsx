@@ -120,13 +120,15 @@ function RTC() {
       mainVideo.current.srcObject = stream;
       peer.on("call", (call) => {
         call.answer(stream);
+        let id;
         call.on("stream", (userVideoStream) => {
-          console.log("mediaStream addVideoStream");
-          addVideoStream(
-            userVideoStream,
-            call.metadata.userID,
-            call.metadata.userName
-          );
+          if (id !== userVideoStream.id) {
+            addVideoStream(
+              userVideoStream,
+              call.metadata.userID,
+              call.metadata.userName
+            );
+          }
         });
       });
       socket.on("userConnected", ({ peerID, userID, userName }) => {
