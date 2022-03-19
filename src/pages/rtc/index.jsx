@@ -134,7 +134,7 @@ function RTC() {
         });
       });
       socket.on("userConnected", ({ peerID, userID, userName, userImage }) => {
-        console.log({
+        console.log(,'userConnected',{
           image: userImage,
           id: userID,
         });
