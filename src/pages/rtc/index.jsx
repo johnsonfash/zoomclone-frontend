@@ -126,6 +126,7 @@ function RTC() {
           if (id !== userVideoStream.id) {
             addVideoStream(
               userVideoStream,
+              call.metadata.peerID,
               call.metadata.userID,
               call.metadata.userName
             );
@@ -140,13 +141,14 @@ function RTC() {
   };
 
   // ref: (e) => (otherVideos.current[prev.length] = e)
-  const addVideoStream = (stream, userID, userName) => {
+  const addVideoStream = (stream, peerID, userID, userName) => {
     setPeople((prev) => {
       return [
         ...prev,
         {
           id: userID,
           stream,
+          peer: peerID,
           name: userName,
         },
       ];
@@ -160,7 +162,7 @@ function RTC() {
     let id;
     call.on("stream", (remoteStream) => {
       if (id !== remoteStream.id) {
-        addVideoStream(remoteStream, userID, userName);
+        addVideoStream(remoteStream, peerID, userID, userName);
         id = remoteStream.id;
       }
     });
