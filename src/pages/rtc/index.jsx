@@ -72,9 +72,10 @@ function RTC() {
     });
 
     socket.on("newMessage", (data) => {
+      let allPeople = people;
       setChats((prev) => {
-        const userImage = people.find((p) => p.id === data.id);
-        console.log(people);
+        const userImage = allPeople.find((p) => p.id === data.id);
+        console.log(allPeople);
         console.log(data);
         if (userImage) {
           data.image = userImage.image;
