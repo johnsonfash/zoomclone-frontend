@@ -79,6 +79,10 @@ function RTC() {
       startVideo();
     });
 
+    socket.on("disconnect", () => {
+      socket.connect();
+    });
+
     socket.on("newMessage", (data) => {
       setChats((prev) => {
         const userImage = list.find((p) => p.id === data.id);
