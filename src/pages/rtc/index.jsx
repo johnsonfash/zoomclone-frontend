@@ -243,8 +243,7 @@ function RTC() {
           <div className="link">
             {url}
             <span
-              onClick={() => copy(`${url}`)}
-              // onClick={() => copy(`https://webrtc-johnfash.heroku.com/${url}`)}
+              onClick={() => copy(`https://zuum.herokuapp.com/${url}`)}
               title="click to copy"
               className="pointer"
             >
