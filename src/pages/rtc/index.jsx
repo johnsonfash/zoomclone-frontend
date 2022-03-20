@@ -39,6 +39,7 @@ var peer = new Peer(undefined, {
   secure: true,
   port: "",
 });
+var list = [];
 
 function RTC() {
   const url = useParams().id;
@@ -72,11 +73,9 @@ function RTC() {
     });
 
     socket.on("newMessage", (data) => {
-      console.log(people)
+      console.log(list);
       setChats((prev) => {
-        const userImage = people.find((p) => p.id === data.id);
-        console.log(people);
-        console.log(data);
+        const userImage = list.find((p) => p.id === data.id);
         if (userImage) {
           data.image = userImage.image;
         }
@@ -141,6 +140,7 @@ function RTC() {
 
   // ref: (e) => (otherVideos.current[prev.length] = e)
   const addVideoStream = (stream, peerID, userID, userName, userImage) => {
+    list.push({ id: userID, image: userImage });
     setPeople((prev) => {
       return [
         ...prev,
