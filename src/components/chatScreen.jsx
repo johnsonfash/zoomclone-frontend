@@ -1,8 +1,4 @@
-import {
-  faChevronLeft,
-  faEllipsis,
-  faPaperPlane,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
 import image from "../assets/placeholder.jpg";
@@ -24,7 +20,7 @@ function ChatScreen({
 }) {
   const [tab, setTab] = useState(openTab);
   const [peopleChat, setPeopleChat] = useState([]);
-  const [focus, setFocus] = useState(autoFocus);
+  const [focus, setFocus] = useState(false);
   const [participant, setParticipant] = useState(0);
   const [type, setType] = useState(false);
   useEffect(() => {

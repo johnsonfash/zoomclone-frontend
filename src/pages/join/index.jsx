@@ -198,6 +198,9 @@ function Join() {
                 <Input
                   required={true}
                   placeholder="Full Name"
+                  autoComplete={true}
+                  autoFocus={true}
+                  autoCapitalize={true}
                   onChange={(e) => setName(e.target.value)}
                   block
                   minLength={4}

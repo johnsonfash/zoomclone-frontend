@@ -30,9 +30,7 @@ import { copy, error, ToastContainer } from "../../components/copyText";
 import { mediaStream } from "../../helper/rtc/utils";
 import { useRef } from "react";
 import { Spinner } from "reactstrap";
-import { Capacitor } from "@capacitor/core";
 import PullToRefresh from "react-simple-pull-to-refresh";
-import media from "../../helper/rtc/media";
 
 var timer;
 const socket = io("https://zuum-backend.herokuapp.com");
@@ -68,8 +66,6 @@ function RTC() {
       return;
     }
 
-    // requestPermission();
-
     peer.on("error", (err) => {
       error(err.type);
     });
@@ -103,6 +99,10 @@ function RTC() {
         window.location.href = "/";
       } else {
         //edited
+        setPeople((prev) => {
+          return prev.map((v) => v.id !== id);
+        });
+        //edited
         for (let conns in peer.connections) {
           peer.connections[conns].forEach((conn, i) => {
             if (conn.peer === peerID) {
@@ -111,19 +111,18 @@ function RTC() {
             }
           });
         }
-        //edited
-        setPeople((prev) => {
-          return prev.map((v) => v.id !== id);
-        });
       }
     });
+
+    return () => {
+      hangUp();
+    };
   }, []);
 
   const startVideo = () => {
     mediaStream((stream) => {
       setStream(stream);
       setLoading(false);
-      setAutoFocus(true);
       mainVideo.current.srcObject = stream;
       //when initiators call you with there metadata attached
       peer.on("call", (call) => {
@@ -234,12 +233,9 @@ function RTC() {
     setText("");
   };
 
-  const openChatTab = () => setChatTab(!chatTab);
-
-  const requestPermission = async () => {
-    if (Capacitor.isNativePlatform) {
-      media.askForMediaAccess();
-    }
+  const openChatTab = () => {
+    setAutoFocus(true);
+    setChatTab(!chatTab);
   };
 
   return (

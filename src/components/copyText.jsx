@@ -2,7 +2,9 @@ import toast, { Toaster } from "react-hot-toast";
 
 export const copy = (text) => {
   navigator.clipboard.writeText(text);
-  toast.success("Copied to clipboard");
+  toast.success("Copied to clipboard", {
+    duration: 800,
+  });
 };
 
 export const error = (text) => {
@@ -12,11 +14,5 @@ export const error = (text) => {
 };
 
 export const ToastContainer = () => (
-  <Toaster
-    toastOptions={{
-      duration: 800,
-    }}
-    position="bottom-center"
-    reverseOrder={false}
-  />
+  <Toaster position="bottom-center" reverseOrder={false} />
 );

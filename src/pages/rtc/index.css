@@ -96,11 +96,11 @@
 .videoList .imageStructureClass .videoDot {
   position: absolute;
   top: 0;
-  font-size: 4rem;
+  font-size: 2rem;
   padding: 0;
   margin: 0;
   color: black;
-  right: -13px;
+  right: -1px;
 }
 .videoList .imageStructureClass .videoDot.active {
   color: red;
@@ -117,9 +117,10 @@
 .videoList .imageStructureClass .audioIcon {
   position: absolute;
   bottom: 0;
+  left: 4px;
   background-color: var(--dark);
-  height: 30px;
-  width: 30px;
+  height: 20px;
+  width: 20px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -277,8 +278,15 @@
   height: 50px;
   min-height: 50px;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   object-fit: cover;
   border-radius: 50%;
+}
+.chats .imageContainer img {
+  display: block;
+  width: 100%;
 }
 
 .chats .chatBody {

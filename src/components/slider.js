@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMicrophoneSlash } from "@fortawesome/free-solid-svg-icons";
+import { faMicrophone, faMicrophoneSlash } from "@fortawesome/free-solid-svg-icons";
 import Video from "./video";
 
 
@@ -35,9 +35,16 @@ function Slider({ item, className, imageStructureClass, imageClass, style, onCha
                     <Video id={data.id} stream={data.stream} />
                 }
               </span>
-              <span className="audioIcon">
-                <FontAwesomeIcon icon={faMicrophoneSlash} />
-              </span>
+              {
+                data?.stream?.getAudioTracks()?.length ?
+                  <span className="audioIcon">
+                    <FontAwesomeIcon icon={faMicrophone} />
+                  </span>
+                  :
+                  <span className="audioIcon">
+                    <FontAwesomeIcon icon={faMicrophoneSlash} />
+                  </span>
+              }
             </span>
           </div>
           {data.name && <h6 id={data.name} className={nameClass} style={nameStyle}> {data.name} </h6>}
