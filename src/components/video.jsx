@@ -4,7 +4,9 @@ import { useRef } from "react";
 function Video({ id, stream }) {
   const ref = useRef();
   useEffect(() => {
-    ref.current.srcObject = stream;
+    setTimeout(() => {
+      ref.current.srcObject = stream;
+    }, 300);
   }, [stream]);
 
   return (
