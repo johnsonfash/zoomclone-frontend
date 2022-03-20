@@ -16,6 +16,7 @@ function Slider({ item, actv, className, imageStructureClass, imageClass, style,
 
   useEffect(() => {
     setActivity(actv)
+    console.log(actv);
   }, [actv]);
 
   const clickedImage = (e) => {

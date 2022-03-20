@@ -53,6 +53,7 @@ function RTC() {
   const [myPeerID, setMyPeerID] = useState("");
   const [stream, setStream] = useState({});
   const [mute, setMute] = useState(false);
+  const [actv, setActv] = useState([]);
   const [calling, setCalling] = useState(false);
   const [isStreaming, setIsStreaming] = useState(true);
   const [text, setText] = useState("");
@@ -102,6 +103,7 @@ function RTC() {
         ...activity.filter((e) => e.id !== id),
         { id, video: value, audio: found.audio },
       ];
+      setActv(activity);
       console.log(activity);
     });
 
@@ -112,6 +114,7 @@ function RTC() {
         ...activity.filter((e) => e.id !== id),
         { id, audio: value, video: found.video },
       ];
+      setActv(activity);
       console.log(activity);
     });
 
@@ -343,7 +346,7 @@ function RTC() {
                 className="className"
                 nameClass="nameClass"
                 imageClass="imageClass"
-                actv={activity}
+                actv={actv}
                 imageStructureClass="imageStructureClass"
                 imageContainerClass="imageContainerClass"
                 item={people}
