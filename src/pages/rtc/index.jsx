@@ -176,19 +176,34 @@ function RTC() {
   const addVideoStream = (stream, peerID, userID, userName, userImage) => {
     list.push({ id: userID, image: userImage });
     setCalling(false);
-    activity.push({ id: userID, video: true, audio: true });
-    setPeople((prev) => {
-      return [
-        ...prev,
-        {
-          id: userID,
-          stream,
-          peer: peerID,
-          name: userName,
-          image: userImage,
-        },
-      ];
-    });
+    if (activity.find((e) => e.id === userID)) {
+      setPeople((prev) => {
+        return [
+          ...prev.filter((e) => e.id !== userID),
+          {
+            id: userID,
+            stream,
+            peer: peerID,
+            name: userName,
+            image: userImage,
+          },
+        ];
+      });
+    } else {
+      activity.push({ id: userID, video: true, audio: true });
+      setPeople((prev) => {
+        return [
+          ...prev,
+          {
+            id: userID,
+            stream,
+            peer: peerID,
+            name: userName,
+            image: userImage,
+          },
+        ];
+      });
+    }
   };
 
   // initiators calling new user with his metadata
