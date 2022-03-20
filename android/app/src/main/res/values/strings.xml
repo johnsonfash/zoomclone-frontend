@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">Zuum</string>
-    <string name="title_activity_main">Zuum</string>
-    <string name="package_name">io.ionic.zuum</string>
-    <string name="custom_url_scheme">io.ionic.zuum</string>
-</resources>
