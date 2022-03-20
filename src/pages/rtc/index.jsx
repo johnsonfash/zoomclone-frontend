@@ -125,7 +125,7 @@ function RTC() {
       } else {
         //edited
         setPeople((prev) => {
-          return prev.map((v) => v.id !== id);
+          return prev.filter((v) => v.id !== id);
         });
         //edited
         for (let conns in peer.connections) {
