@@ -96,8 +96,8 @@ function RTC() {
     });
 
     socket.on("muted-video", (id, value) => {
-      console.log(id, value)
-      console.log(activity)
+      console.log(id, value);
+      console.log(activity);
       const found = activity.find((all) => all.id === id);
       activity = [
         ...activity.map((e) => e.id !== id),
@@ -106,8 +106,8 @@ function RTC() {
     });
 
     socket.on("muted-audio", (id, value) => {
-      console.log(id, value)
-      console.log(activity)
+      console.log(id, value);
+      console.log(activity);
       const found = activity.find((all) => all.id === id);
       activity = [
         ...activity.map((e) => e.id !== id),
@@ -217,11 +217,11 @@ function RTC() {
     if (enabled) {
       stream.getAudioTracks()[0].enabled = false;
       setMute(true);
-      socket.emit("mute-audio", myID, true);
+      socket.emit("mute-audio", myID, false);
     } else {
       stream.getAudioTracks()[0].enabled = true;
       setMute(false);
-      socket.emit("mute-audio", myID, false);
+      socket.emit("mute-audio", myID, true);
     }
   };
 
@@ -230,11 +230,11 @@ function RTC() {
     if (enabled) {
       stream.getVideoTracks()[0].enabled = false;
       setIsStreaming(false);
-      socket.emit("mute-video", myID, true);
+      socket.emit("mute-video", myID, false);
     } else {
       stream.getVideoTracks()[0].enabled = true;
       setIsStreaming(true);
-      socket.emit("mute-video", myID, false);
+      socket.emit("mute-video", myID, true);
     }
   };
 
