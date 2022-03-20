@@ -33,7 +33,6 @@ import { Spinner } from "reactstrap";
 import PullToRefresh from "react-simple-pull-to-refresh";
 
 var timer;
-var activity = [];
 const socket = io("https://zuum-backend.herokuapp.com");
 const myID = getID();
 const peer = new Peer(undefined, {
@@ -52,6 +51,7 @@ function RTC() {
   const [loading, setLoading] = useState(true);
   const [myPeerID, setMyPeerID] = useState("");
   const [stream, setStream] = useState({});
+  const [activity, setActivity] = useState([]);
   const [mute, setMute] = useState(false);
   const [calling, setCalling] = useState(false);
   const [isStreaming, setIsStreaming] = useState(true);
@@ -96,23 +96,25 @@ function RTC() {
     });
 
     socket.on("muted-video", (id, value) => {
-      console.log(id, value);
-      console.log(activity);
       const found = activity.find((all) => all.id === id);
-      activity = [
-        ...activity.map((e) => e.id !== id),
-        { id, video: value, audio: found.audio },
-      ];
+      setActivity((prev) => {
+        return [
+          ...prev.filter((e) => e.id !== id),
+          { id, video: value, audio: found.audio },
+        ];
+      });
     });
 
     socket.on("muted-audio", (id, value) => {
       console.log(id, value);
       console.log(activity);
       const found = activity.find((all) => all.id === id);
-      activity = [
-        ...activity.map((e) => e.id !== id),
-        { id, audio: value, video: found.video },
-      ];
+      setActivity((prev) => {
+        return [
+          ...prev.filter((e) => e.id !== id),
+          { id, audio: value, video: found.video },
+        ];
+      });
     });
 
     // edited
@@ -176,7 +178,7 @@ function RTC() {
   const addVideoStream = (stream, peerID, userID, userName, userImage) => {
     list.push({ id: userID, image: userImage });
     setCalling(false);
-    activity.push({ id: userID, video: true, audio: true });
+    setActivity((prev) => [...prev, { id: userID, video: true, audio: true }]);
     setPeople((prev) => {
       return [
         ...prev,
