@@ -48,6 +48,7 @@ function Join() {
     if (isRegistered()) {
       setAllLinks(getLinks());
       setImS(getImage());
+      copy("Click image to LOG OUT");
     } else {
       setModal(true);
     }
@@ -105,7 +106,11 @@ function Join() {
         <div className="one"></div>
         <div className="two">webRTC</div>
         <div className="three">
-          <div className="profContn pointer" onClick={() => logOut()}>
+          <div
+            title="LOG OUT"
+            className="profContn pointer"
+            onClick={() => logOut()}
+          >
             <img src={imS} alt="" />
           </div>
         </div>
