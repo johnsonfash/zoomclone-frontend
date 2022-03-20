@@ -15,6 +15,7 @@ function ChatScreen({
   onClose,
   chats,
   chatRef,
+  autoFocus,
   people,
   typing,
   value,
@@ -23,6 +24,7 @@ function ChatScreen({
 }) {
   const [tab, setTab] = useState(openTab);
   const [peopleChat, setPeopleChat] = useState([]);
+  const [focus, setFocus] = useState(autoFocus);
   const [participant, setParticipant] = useState(0);
   const [type, setType] = useState(false);
   useEffect(() => {
@@ -32,6 +34,10 @@ function ChatScreen({
   useEffect(() => {
     setPeopleChat(chats);
   }, [chats]);
+
+  useEffect(() => {
+    setFocus(autoFocus);
+  }, [autoFocus]);
 
   useEffect(() => {
     setParticipant(people ? people + 1 : 1);
@@ -85,7 +91,12 @@ function ChatScreen({
             </div>
           )}
           <Form onSubmit={onClick} className="fx">
-            <Input value={value} required={true} onChange={onChange} />
+            <Input
+              autoFocus={focus}
+              value={value}
+              required={true}
+              onChange={onChange}
+            />
             <Button type="submit">
               <FontAwesomeIcon icon={faPaperPlane} />
             </Button>

@@ -53,6 +53,7 @@ function RTC() {
   const [mute, setMute] = useState(false);
   const [isStreaming, setIsStreaming] = useState(true);
   const [text, setText] = useState("");
+  const [autoFocus, setAutoFocus] = useState(false);
   const [chats, setChats] = useState([]);
   const [chatTab, setChatTab] = useState(false);
   const [typing, setTyping] = useState(false);
@@ -75,7 +76,6 @@ function RTC() {
     });
 
     socket.on("newMessage", (data) => {
-      console.log(list);
       setChats((prev) => {
         const userImage = list.find((p) => p.id === data.id);
         if (userImage) {
@@ -118,6 +118,7 @@ function RTC() {
     mediaStream((stream) => {
       setStream(stream);
       setLoading(false);
+      setAutoFocus(true);
       mainVideo.current.srcObject = stream;
       //when initiators call you with there metadata attached
       peer.on("call", (call) => {
@@ -328,6 +329,7 @@ function RTC() {
         typing={typing}
         chatRef={chatScreen}
         userID={myID}
+        autoFocus={autoFocus}
         people={people && people.length}
         onClose={openChatTab}
         openTab={chatTab}
