@@ -119,6 +119,7 @@ function RTC() {
       setStream(stream);
       setLoading(false);
       mainVideo.current.srcObject = stream;
+      //when initiators call you with there metadata attached
       peer.on("call", (call) => {
         call.answer(stream);
         let id;
@@ -129,18 +130,20 @@ function RTC() {
               call.metadata.peerID,
               call.metadata.userID,
               call.metadata.userName,
-              call.metadata.image
+              call.metadata.userImage
             );
             id = userVideoStream.id;
           }
         });
       });
+      //sent out signal from newly connected user for initiators to call him/her
       socket.on("userConnected", ({ peerID, userID, userName, userImage }) => {
         connectToNewUser(peerID, stream, userID, userName, userImage);
       });
     });
   };
 
+  // adding video stream to circles sliders
   // ref: (e) => (otherVideos.current[prev.length] = e)
   const addVideoStream = (stream, peerID, userID, userName, userImage) => {
     list.push({ id: userID, image: userImage });
@@ -159,6 +162,7 @@ function RTC() {
     });
   };
 
+  // initiators calling new user with his metadata
   const connectToNewUser = (peerID, stream, userID, userName, userImage) => {
     const call = peer.call(peerID, stream, {
       metadata: {
@@ -169,6 +173,7 @@ function RTC() {
       },
     });
     let id;
+    // initiators getting stream from new user
     call.on("stream", (remoteStream) => {
       if (id !== remoteStream.id) {
         addVideoStream(remoteStream, peerID, userID, userName, userImage);
