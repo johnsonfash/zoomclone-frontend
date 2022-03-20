@@ -52,6 +52,7 @@ function RTC() {
   const [myPeerID, setMyPeerID] = useState("");
   const [stream, setStream] = useState({});
   const [mute, setMute] = useState(false);
+  const [calling, setCalling] = useState(false);
   const [isStreaming, setIsStreaming] = useState(true);
   const [text, setText] = useState("");
   const [autoFocus, setAutoFocus] = useState(false);
@@ -126,6 +127,7 @@ function RTC() {
       mainVideo.current.srcObject = stream;
       //when initiators call you with there metadata attached
       peer.on("call", (call) => {
+        setCalling(true);
         call.answer(stream);
         let id;
         call.on("stream", (userVideoStream) => {
@@ -152,6 +154,7 @@ function RTC() {
   // ref: (e) => (otherVideos.current[prev.length] = e)
   const addVideoStream = (stream, peerID, userID, userName, userImage) => {
     list.push({ id: userID, image: userImage });
+    setCalling(false)
     setPeople((prev) => {
       return [
         ...prev,
@@ -168,6 +171,7 @@ function RTC() {
 
   // initiators calling new user with his metadata
   const connectToNewUser = (peerID, stream, userID, userName, userImage) => {
+    setCalling(true);
     const call = peer.call(peerID, stream, {
       metadata: {
         peerID: myPeerID,
@@ -286,14 +290,20 @@ function RTC() {
             )}
           </div>
           <div className="videoList">
-            <Slider
-              className="className"
-              nameClass="nameClass"
-              imageClass="imageClass"
-              imageStructureClass="imageStructureClass"
-              imageContainerClass="imageContainerClass"
-              item={people}
-            />
+            {calling ? (
+              <div className="className fx fx-center">
+                <Spinner size="lg" color="primary" />
+              </div>
+            ) : (
+              <Slider
+                className="className"
+                nameClass="nameClass"
+                imageClass="imageClass"
+                imageStructureClass="imageStructureClass"
+                imageContainerClass="imageContainerClass"
+                item={people}
+              />
+            )}
           </div>
           <div
             className="controlButtons"

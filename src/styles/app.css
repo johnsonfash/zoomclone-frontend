@@ -17,6 +17,10 @@
 .fx-align {
   align-items: center;
 }
+.fx-center {
+  align-items: center;
+  justify-content: center;
+}
 .fx-justify {
   justify-content: center;
 }
