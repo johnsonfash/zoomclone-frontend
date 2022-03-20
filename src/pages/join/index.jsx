@@ -94,7 +94,7 @@ function Join() {
 
   const handleLink = (e) => {
     e.preventDefault();
-    navigate(inputLink);
+    navigate(`https://zuum.herokuapp.com/${inputLink}`);
   };
 
   return (
@@ -147,7 +147,7 @@ function Join() {
               <div className="inputC">
                 <Form onSubmit={handleLink}>
                   <Input
-                    placeholder="Enter link here"
+                    placeholder="Enter link (xxxx-xxxx-xxxx)"
                     type="text"
                     valid={inputLink}
                     onChange={(e) => setInputLink(e.target.value)}
