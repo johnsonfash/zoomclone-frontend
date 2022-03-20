@@ -6,20 +6,18 @@ function Video({ id, stream }) {
   useEffect(() => {
     setTimeout(() => {
       ref.current.srcObject = stream;
-    }, 300);
+    }, 500);
   }, [stream]);
 
   return (
-    <div>
-      <video
-        controls={false}
-        playsInline={true}
-        muted={false}
-        autoPlay={true}
-        ref={ref}
-        id={id}
-      />
-    </div>
+    <video
+      controls={false}
+      playsInline={true}
+      muted={false}
+      autoPlay={true}
+      ref={ref}
+      id={id}
+    />
   );
 }
 
