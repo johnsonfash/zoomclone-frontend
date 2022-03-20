@@ -1,0 +1,7 @@
+{
+  "name": "Zuum",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

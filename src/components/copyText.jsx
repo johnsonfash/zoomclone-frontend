@@ -6,13 +6,15 @@ export const copy = (text) => {
 };
 
 export const error = (text) => {
-  toast.error(`Error: ${text}`);
+  toast.error(`Error: ${text}`, {
+    duration: 2000,
+  });
 };
 
 export const ToastContainer = () => (
   <Toaster
     toastOptions={{
-      duration: 700,
+      duration: 800,
     }}
     position="bottom-center"
     reverseOrder={false}

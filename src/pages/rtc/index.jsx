@@ -30,17 +30,20 @@ import { copy, error, ToastContainer } from "../../components/copyText";
 import { mediaStream } from "../../helper/rtc/utils";
 import { useRef } from "react";
 import { Spinner } from "reactstrap";
+import { Capacitor } from "@capacitor/core";
+import PullToRefresh from "react-simple-pull-to-refresh";
+import media from "../../helper/rtc/media";
 
 var timer;
-var socket = io("https://zuum-backend.herokuapp.com");
-var myID = getID();
-var peer = new Peer(undefined, {
+const socket = io("https://zuum-backend.herokuapp.com");
+const myID = getID();
+const peer = new Peer(undefined, {
   path: "/peerjs",
   host: "zuum-backend.herokuapp.com",
   secure: true,
   port: "",
 });
-var list = [];
+const list = [];
 
 function RTC() {
   const url = useParams().id;
@@ -64,6 +67,8 @@ function RTC() {
       navigate("/");
       return;
     }
+
+    // requestPermission();
 
     peer.on("error", (err) => {
       error(err.type);
@@ -148,7 +153,6 @@ function RTC() {
   // ref: (e) => (otherVideos.current[prev.length] = e)
   const addVideoStream = (stream, peerID, userID, userName, userImage) => {
     list.push({ id: userID, image: userImage });
-    console.log({ id: userID, image: userImage });
     setPeople((prev) => {
       return [
         ...prev,
@@ -232,6 +236,12 @@ function RTC() {
 
   const openChatTab = () => setChatTab(!chatTab);
 
+  const requestPermission = async () => {
+    if (Capacitor.isNativePlatform) {
+      media.askForMediaAccess();
+    }
+  };
+
   return (
     <div className="mainContainer">
       <ToastContainer />
@@ -252,74 +262,84 @@ function RTC() {
           </div>
         </div>
 
-        <div className="live">
+        <div className="live mr-2">
           <span className="lvIcon">
             <FontAwesomeIcon icon={faSatelliteDish} />
           </span>
           <span className="dot">•</span>
           {1 + people.length}
         </div>
-        <div className="chat pointer" onClick={openChatTab}>
-          <FontAwesomeIcon icon={faMessage} />
-        </div>
-      </div>
-      <div className="mainVideo">
-        {loading ? (
-          <div className="loader">
-            <Spinner size="lg" color="primary" />
-          </div>
-        ) : (
-          <video
-            className="video"
-            autoPlay={true}
-            playsInline={true}
-            controls={false}
-            ref={mainVideo}
-            muted={false}
-          />
-        )}
-      </div>
-      <div className="videoList">
-        <Slider
-          className="className"
-          nameClass="nameClass"
-          imageClass="imageClass"
-          imageStructureClass="imageStructureClass"
-          imageContainerClass="imageContainerClass"
-          item={people}
-        />
-      </div>
-      <div
-        className="controlButtons"
-        style={{ display: chatTab ? "none" : "flex" }}
-      >
-        <span className="item pointer" onClick={hangUp}>
-          <FontAwesomeIcon icon={faPhone} />
-        </span>
-        <span className="item pointer" onClick={pauseStream}>
-          {isStreaming ? (
-            <span>
-              <FontAwesomeIcon icon={faVideo} />
-            </span>
-          ) : (
-            <span>
-              <FontAwesomeIcon icon={faVideoSlash} />
-            </span>
-          )}
-        </span>
-        <span className="item pointer" onClick={muteVideo}>
-          {mute ? (
-            <span>
-              <FontAwesomeIcon icon={faMicrophoneSlash} />
-            </span>
-          ) : (
-            <span>
-              <FontAwesomeIcon icon={faMicrophone} />
-            </span>
-          )}
-        </span>
       </div>
 
+      <>
+        <PullToRefresh onRefresh={() => window.location.reload()}>
+          <div className="mainVideo">
+            {loading ? (
+              <div className="loader">
+                <Spinner size="lg" color="primary" />
+              </div>
+            ) : (
+              <video
+                className="video"
+                autoPlay={true}
+                playsInline={true}
+                controls={false}
+                ref={mainVideo}
+                muted={false}
+              />
+            )}
+          </div>
+          <div className="videoList">
+            <Slider
+              className="className"
+              nameClass="nameClass"
+              imageClass="imageClass"
+              imageStructureClass="imageStructureClass"
+              imageContainerClass="imageContainerClass"
+              item={people}
+            />
+          </div>
+          <div
+            className="controlButtons"
+            style={{ display: chatTab ? "none" : "flex" }}
+          >
+            <div className="fx fx-align">
+              <span className="item pointer" onClick={hangUp}>
+                <FontAwesomeIcon icon={faPhone} />
+              </span>
+              <span className="item pointer" onClick={pauseStream}>
+                {isStreaming ? (
+                  <span>
+                    <FontAwesomeIcon icon={faVideo} />
+                  </span>
+                ) : (
+                  <span>
+                    <FontAwesomeIcon icon={faVideoSlash} />
+                  </span>
+                )}
+              </span>
+              <span className="item pointer" onClick={muteVideo}>
+                {mute ? (
+                  <span>
+                    <FontAwesomeIcon icon={faMicrophoneSlash} />
+                  </span>
+                ) : (
+                  <span>
+                    <FontAwesomeIcon icon={faMicrophone} />
+                  </span>
+                )}
+              </span>
+            </div>
+            <div>
+              <span className="item pointer" onClick={openChatTab}>
+                <span>
+                  <FontAwesomeIcon icon={faMessage} />
+                </span>
+              </span>
+            </div>
+          </div>
+        </PullToRefresh>
+      </>
       <ChatScreen
         value={text}
         onChange={handleChange}

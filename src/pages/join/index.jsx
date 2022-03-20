@@ -20,6 +20,7 @@ import FixedFooter from "../../components/fixedFooter";
 import imageToString from "../../helper/fileReader";
 import moment from "../../helper/timeago";
 import uuid from "../../helper/uuid";
+import PullToRefresh from "react-simple-pull-to-refresh";
 import {
   addLink,
   getImage,
@@ -94,7 +95,7 @@ function Join() {
 
   const handleLink = (e) => {
     e.preventDefault();
-    navigate(`https://zuum.herokuapp.com/${inputLink}`);
+    navigate(`/${inputLink}`);
   };
 
   return (
@@ -109,28 +110,34 @@ function Join() {
           </div>
         </div>
       </div>
-      <div className="meetingButtons">
-        <div className="button" onClick={() => showTab(true)}>
-          Create a room
-        </div>
-        <div className="button" onClick={() => showTab(false)}>
-          Use a code
-        </div>
-      </div>
-      <div className="mLinks">
-        <div className="title">Previous Links</div>
-        <div className="itemsContainer">
-          {allLinks.map((data, idx) => (
-            <a key={idx} href={data.link} className="items">
-              <div className="no">{idx + 1}</div>
-              <div className="linkC">
-                <div className="link">{data.link}</div>
-                <div className="date">{moment.setDate(data.date).moment()}</div>
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
+      <>
+        <PullToRefresh onRefresh={() => window.location.reload()}>
+          <div className="meetingButtons">
+            <div className="button" onClick={() => showTab(true)}>
+              Create a room
+            </div>
+            <div className="button" onClick={() => showTab(false)}>
+              Use a code
+            </div>
+          </div>
+          <div className="mLinks">
+            <div className="title">Previous Links</div>
+            <div className="itemsContainer">
+              {allLinks.map((data, idx) => (
+                <a key={idx} href={data.link} className="items">
+                  <div className="no">{idx + 1}</div>
+                  <div className="linkC">
+                    <div className="link">{data.link}</div>
+                    <div className="date">
+                      {moment.setDate(data.date).moment()}
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </PullToRefresh>
+      </>
       <FixedFooter>
         <BottomPanel openTab={tab} onClick={showTab}>
           <div className="linkCopy">

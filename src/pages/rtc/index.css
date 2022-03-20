@@ -1,6 +1,5 @@
 .head {
-  margin-left: 0.5rem;
-  padding: 0.7rem 1rem;
+  padding: 0.7rem 0;
   user-select: none;
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
 }
@@ -26,7 +25,7 @@
   display: inline-block;
   margin-right: 0.3rem;
 }
-@media (max-width: 385px) {
+@media (max-width: 300px) {
   .header .live .lvIcon {
     display: none;
   }
@@ -178,16 +177,17 @@
 }
 .controlButtons {
   display: flex;
-  margin: 1.5rem 0 1rem;
-  justify-content: center;
+  margin: 1.8rem 0 0.5rem 0;
+  justify-content: space-between;
+  align-items: center;
 }
 .controlButtons .item {
   background-color: var(--dark);
   display: inline-flex;
   font-size: 1.8rem;
   border-radius: 1rem;
-  height: 3.5rem;
-  width: 3.5rem;
+  height: 3.2rem;
+  width: 3.2rem;
   margin: 0 1rem;
   align-items: center;
   justify-content: center;
