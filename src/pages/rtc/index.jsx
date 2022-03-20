@@ -233,26 +233,26 @@ function RTC() {
   const muteVideo = () => {
     const enabled = stream.getAudioTracks()[0].enabled;
     if (enabled) {
+      socket.emit("mute-audio", myID, false);
       stream.getAudioTracks()[0].enabled = false;
       setMute(true);
-      socket.emit("mute-audio", myID, false);
     } else {
+      socket.emit("mute-audio", myID, true);
       stream.getAudioTracks()[0].enabled = true;
       setMute(false);
-      socket.emit("mute-audio", myID, true);
     }
   };
 
   const pauseStream = () => {
     const enabled = stream.getVideoTracks()[0].enabled;
     if (enabled) {
+      socket.emit("mute-video", myID, false);
       stream.getVideoTracks()[0].enabled = false;
       setIsStreaming(false);
-      socket.emit("mute-video", myID, false);
     } else {
+      socket.emit("mute-video", myID, true);
       stream.getVideoTracks()[0].enabled = true;
       setIsStreaming(true);
-      socket.emit("mute-video", myID, true);
     }
   };
 
