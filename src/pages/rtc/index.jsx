@@ -97,22 +97,22 @@ function RTC() {
 
     socket.on("muted-video", (id, value) => {
       console.log(id, value);
-      console.log(activity);
       const found = activity.find((all) => all.id === id);
       activity = [
         ...activity.filter((e) => e.id !== id),
         { id, video: value, audio: found.audio },
       ];
+      console.log(activity);
     });
 
     socket.on("muted-audio", (id, value) => {
       console.log(id, value);
-      console.log(activity);
       const found = activity.find((all) => all.id === id);
       activity = [
         ...activity.filter((e) => e.id !== id),
         { id, audio: value, video: found.video },
       ];
+      console.log(activity);
     });
 
     // edited
