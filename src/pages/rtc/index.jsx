@@ -33,6 +33,7 @@ import { Spinner } from "reactstrap";
 import PullToRefresh from "react-simple-pull-to-refresh";
 
 var timer;
+var activity = [];
 const socket = io("https://zuum-backend.herokuapp.com");
 const myID = getID();
 const peer = new Peer(undefined, {
@@ -57,7 +58,6 @@ function RTC() {
   const [text, setText] = useState("");
   const [autoFocus, setAutoFocus] = useState(false);
   const [chats, setChats] = useState([]);
-  const [activity, setActivity] = useState([]);
   const [chatTab, setChatTab] = useState(false);
   const [typing, setTyping] = useState(false);
   const [people, setPeople] = useState([]);
@@ -96,21 +96,19 @@ function RTC() {
     });
 
     socket.on("mute-video", (id, value) => {
-      setActivity((prev) => {
-        return [
-          ...prev,
-          { ...activity.find((all) => all.id === id), video: value },
-        ];
-      });
+      const found = activity.find((all) => all.id === id);
+      activity = [
+        ...activity.map((e) => e.id !== id),
+        { id, video: value, audio: found.audio },
+      ];
     });
 
     socket.on("mute-audio", (id, value) => {
-      setActivity((prev) => {
-        return [
-          ...prev,
-          { ...activity.find((all) => all.id === id), audio: value },
-        ];
-      });
+      const found = activity.find((all) => all.id === id);
+      activity = [
+        ...activity.map((e) => e.id !== id),
+        { id, audio: value, video: found.video },
+      ];
     });
 
     // edited
@@ -174,9 +172,7 @@ function RTC() {
   const addVideoStream = (stream, peerID, userID, userName, userImage) => {
     list.push({ id: userID, image: userImage });
     setCalling(false);
-    setActivity((prev) => {
-      return [...prev, { id: userID, video: true, audio: true }];
-    });
+    activity.push({ id: userID, video: true, audio: true });
     setPeople((prev) => {
       return [
         ...prev,
