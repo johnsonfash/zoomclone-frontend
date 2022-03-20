@@ -57,6 +57,7 @@ function RTC() {
   const [text, setText] = useState("");
   const [autoFocus, setAutoFocus] = useState(false);
   const [chats, setChats] = useState([]);
+  const [activity, setActivity] = useState([]);
   const [chatTab, setChatTab] = useState(false);
   const [typing, setTyping] = useState(false);
   const [people, setPeople] = useState([]);
@@ -92,6 +93,24 @@ function RTC() {
 
     socket.on("newTyper", (data) => {
       setTyping(data);
+    });
+
+    socket.on("mute-video", (id, value) => {
+      setActivity((prev) => {
+        return [
+          ...prev,
+          { ...activity.find((all) => all.id === id), video: value },
+        ];
+      });
+    });
+
+    socket.on("mute-audio", (id, value) => {
+      setActivity((prev) => {
+        return [
+          ...prev,
+          { ...activity.find((all) => all.id === id), audio: value },
+        ];
+      });
     });
 
     // edited
@@ -155,6 +174,9 @@ function RTC() {
   const addVideoStream = (stream, peerID, userID, userName, userImage) => {
     list.push({ id: userID, image: userImage });
     setCalling(false);
+    setActivity((prev) => {
+      return [...prev, { id: userID, video: true, audio: true }];
+    });
     setPeople((prev) => {
       return [
         ...prev,
@@ -195,9 +217,11 @@ function RTC() {
     if (enabled) {
       stream.getAudioTracks()[0].enabled = false;
       setMute(true);
+      socket.emit("mute-audio", myID, true);
     } else {
       stream.getAudioTracks()[0].enabled = true;
       setMute(false);
+      socket.emit("mute-audio", myID, false);
     }
   };
 
@@ -206,9 +230,11 @@ function RTC() {
     if (enabled) {
       stream.getVideoTracks()[0].enabled = false;
       setIsStreaming(false);
+      socket.emit("mute-video", myID, true);
     } else {
       stream.getVideoTracks()[0].enabled = true;
       setIsStreaming(true);
+      socket.emit("mute-video", myID, false);
     }
   };
 
@@ -299,6 +325,7 @@ function RTC() {
                 className="className"
                 nameClass="nameClass"
                 imageClass="imageClass"
+                actv={activity}
                 imageStructureClass="imageStructureClass"
                 imageContainerClass="imageContainerClass"
                 item={people}

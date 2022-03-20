@@ -5,13 +5,18 @@ import { faMicrophone, faMicrophoneSlash } from "@fortawesome/free-solid-svg-ico
 import Video from "./video";
 
 
-function Slider({ item, className, imageStructureClass, imageClass, style, onChange, absolutePath, nameStyle, structureStyle, imageStyle, imageContainerClass, textCut, dynamicColor, imageContainerStyle, textClass, textStyle, nameClass }) {
+function Slider({ item, actv, className, imageStructureClass, imageClass, style, onChange, absolutePath, nameStyle, structureStyle, imageStyle, imageContainerClass, textCut, dynamicColor, imageContainerStyle, textClass, textStyle, nameClass }) {
   const [state, setstate] = useState([]);
+  const [activity, setActivity] = useState([]);
   const [select, setSelect] = useState('');
 
   useEffect(() => {
     setstate(item)
   }, [item]);
+
+  useEffect(() => {
+    setActivity(actv)
+  }, [actv]);
 
   const clickedImage = (e) => {
     let val = e.target.id;
@@ -27,7 +32,7 @@ function Slider({ item, className, imageStructureClass, imageClass, style, onCha
           id={data.id} onClick={clickedImage}>
           <div id={data.id} className={`${imageContainerClass}  ${select === data.id && "active"}`} style={{ display: "inline-flex", flexDirection: 'column', justifyContent: 'space-between', cursor: "pointer", ...imageContainerStyle }}>
             <span className={imageStructureClass} id={data.id} style={structureStyle}>
-              <span className="videoDot active">•</span>
+              <span className="videoDot active">{activity.find(e => e?.id === data.id)?.video ? '•' : ''}</span>
               <span className={imageClass} style={{ ...imageStyle, display: "inline-block", overflow: "hidden" }}>
                 {
                   !data.stream ?
@@ -36,7 +41,7 @@ function Slider({ item, className, imageStructureClass, imageClass, style, onCha
                 }
               </span>
               {
-                data?.stream?.getAudioTracks()?.length ?
+                activity.find(e => e?.id === data.id)?.audio ?
                   <span className="audioIcon">
                     <FontAwesomeIcon icon={faMicrophone} />
                   </span>
