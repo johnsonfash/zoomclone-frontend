@@ -5,7 +5,7 @@ import { faMicrophone, faMicrophoneSlash } from "@fortawesome/free-solid-svg-ico
 import Video from "./video";
 
 
-function Slider({ item, actv, className, imageStructureClass, imageClass, style, onChange, absolutePath, nameStyle, structureStyle, imageStyle, imageContainerClass, textCut, dynamicColor, imageContainerStyle, textClass, textStyle, nameClass }) {
+function Slider({ item, actv, clickedImage, className, imageStructureClass, imageClass, style, onChange, absolutePath, nameStyle, structureStyle, imageStyle, imageContainerClass, textCut, dynamicColor, imageContainerStyle, textClass, textStyle, nameClass }) {
   const [state, setstate] = useState([]);
   const [activity, setActivity] = useState([]);
   const [select, setSelect] = useState('');
@@ -19,18 +19,19 @@ function Slider({ item, actv, className, imageStructureClass, imageClass, style,
     console.log(actv);
   }, [actv]);
 
-  const clickedImage = (e) => {
-    let val = e.target.id;
-    setSelect(val)
-    onChange && onChange(val);
-  }
+  // const clickedImage = (e) => {
+  //   let val = e.target.id;
+  //   setSelect(val)
+  //   onChange && onChange(val);
+  // }
 
   return (
     <div className={`overflowSlider ${className}`} style={style}>
       {state && state.map((data, idx) => (
         <div key={idx}
           className='slideImage'
-          id={data.id} onClick={clickedImage}>
+          title="CLICK TO VIEW ON MAIN SCREEN"
+          id={data.id} onClick={() => clickedImage({ id: data.id, stream: data.stream, peer: data.peer, name: data.name, image: data.image })}>
           <div id={data.id} className={`${imageContainerClass}  ${select === data.id && "active"}`} style={{ display: "inline-flex", flexDirection: 'column', justifyContent: 'space-between', cursor: "pointer", ...imageContainerStyle }}>
             <span className={imageStructureClass} id={data.id} style={structureStyle}>
               <span className="videoDot active">{activity.find(e => e?.id === data.id)?.video ? '•' : ''}</span>

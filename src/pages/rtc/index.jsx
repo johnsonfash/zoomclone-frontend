@@ -51,6 +51,13 @@ function RTC() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [myPeerID, setMyPeerID] = useState("");
+  const [mainVid, setMainVid] = useState({
+    id: myID,
+    stream: {},
+    peer: "",
+    name: getName(),
+    image: getImage(),
+  });
   const [stream, setStream] = useState({});
   const [mute, setMute] = useState(false);
   const [actv, setActv] = useState([]);
@@ -74,6 +81,10 @@ function RTC() {
     });
 
     peer.on("open", (peerID) => {
+      setMainVid((prev) => {
+        prev.peer = peerID;
+        return prev;
+      });
       socket.emit("join-room", url, peerID, getID(), getName(), getImage());
       setMyPeerID(peerID);
       startVideo();
@@ -152,6 +163,10 @@ function RTC() {
     mediaStream((stream) => {
       setStream(stream);
       setLoading(false);
+      setMainVid((prev) => {
+        prev.stream = stream;
+        return prev;
+      });
       mainVideo.current.srcObject = stream;
       //when initiators call you with there metadata attached
       peer.on("call", (call) => {
@@ -293,6 +308,14 @@ function RTC() {
     setChatTab(!chatTab);
   };
 
+  const clickedImage = (obj) => {
+    setPeople((prev) => {
+      return [mainVid, ...prev.filter((e) => e.id !== obj.id)];
+    });
+    setMainVid(obj);
+    mainVideo.current.srcObject = obj.stream;
+  };
+
   return (
     <div className="mainContainer">
       <ToastContainer />
@@ -351,6 +374,7 @@ function RTC() {
                 nameClass="nameClass"
                 imageClass="imageClass"
                 actv={actv}
+                clickedImage={clickedImage}
                 imageStructureClass="imageStructureClass"
                 imageContainerClass="imageContainerClass"
                 item={people}
