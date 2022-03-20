@@ -178,8 +178,11 @@ function RTC() {
     setCalling(false);
     if (activity.find((e) => e.id === userID)) {
       setPeople((prev) => {
+        return prev.filter((e) => e.id !== userID);
+      });
+      setPeople((prev) => {
         return [
-          ...prev.filter((e) => e.id !== userID),
+          ...prev,
           {
             id: userID,
             stream,
