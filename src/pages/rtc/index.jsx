@@ -154,7 +154,7 @@ function RTC() {
   // ref: (e) => (otherVideos.current[prev.length] = e)
   const addVideoStream = (stream, peerID, userID, userName, userImage) => {
     list.push({ id: userID, image: userImage });
-    setCalling(false)
+    setCalling(false);
     setPeople((prev) => {
       return [
         ...prev,
