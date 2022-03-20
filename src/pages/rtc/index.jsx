@@ -29,6 +29,7 @@ import {
 import { copy, error, ToastContainer } from "../../components/copyText";
 import { mediaStream } from "../../helper/rtc/utils";
 import { useRef } from "react";
+import { Spinner } from "reactstrap";
 
 var timer;
 var socket = io("https://zuum-backend.herokuapp.com");
@@ -46,6 +47,7 @@ function RTC() {
   let mainVideo = useRef();
   let chatScreen = useRef();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   const [myPeerID, setMyPeerID] = useState("");
   const [stream, setStream] = useState({});
   const [mute, setMute] = useState(false);
@@ -115,6 +117,7 @@ function RTC() {
   const startVideo = () => {
     mediaStream((stream) => {
       setStream(stream);
+      setLoading(false);
       mainVideo.current.srcObject = stream;
       peer.on("call", (call) => {
         call.answer(stream);
@@ -256,14 +259,20 @@ function RTC() {
         </div>
       </div>
       <div className="mainVideo">
-        <video
-          className="video"
-          autoPlay={true}
-          playsInline={true}
-          controls={false}
-          ref={mainVideo}
-          muted={false}
-        ></video>
+        {loading ? (
+          <div className="loader">
+            <Spinner size="lg" color="primary" />
+          </div>
+        ) : (
+          <video
+            className="video"
+            autoPlay={true}
+            playsInline={true}
+            controls={false}
+            ref={mainVideo}
+            muted={false}
+          />
+        )}
       </div>
       <div className="videoList">
         <Slider
