@@ -48,7 +48,7 @@ function Join() {
     if (isRegistered()) {
       setAllLinks(getLinks());
       setImS(getImage());
-      copy("Click image to LOG OUT");
+      copy("Click image to LOG OUT", true);
     } else {
       setModal(true);
     }

@@ -95,7 +95,7 @@ function RTC() {
       setTyping(data);
     });
 
-    socket.on("mute-video", (id, value) => {
+    socket.on("muted-video", (id, value) => {
       console.log(id, value)
       console.log(activity)
       const found = activity.find((all) => all.id === id);
@@ -105,7 +105,7 @@ function RTC() {
       ];
     });
 
-    socket.on("mute-audio", (id, value) => {
+    socket.on("muted-audio", (id, value) => {
       console.log(id, value)
       console.log(activity)
       const found = activity.find((all) => all.id === id);

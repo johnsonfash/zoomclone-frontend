@@ -1,9 +1,9 @@
 import toast, { Toaster } from "react-hot-toast";
 
-export const copy = (text) => {
+export const copy = (text, info = false) => {
   navigator.clipboard.writeText(text);
-  toast.success("Copied to clipboard", {
-    duration: 800,
+  toast.success(info ? info : "Copied to clipboard", {
+    duration: 1000,
   });
 };
 
