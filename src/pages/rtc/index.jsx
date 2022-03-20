@@ -96,6 +96,8 @@ function RTC() {
     });
 
     socket.on("mute-video", (id, value) => {
+      console.log(id, value)
+      console.log(activity)
       const found = activity.find((all) => all.id === id);
       activity = [
         ...activity.map((e) => e.id !== id),
@@ -104,6 +106,8 @@ function RTC() {
     });
 
     socket.on("mute-audio", (id, value) => {
+      console.log(id, value)
+      console.log(activity)
       const found = activity.find((all) => all.id === id);
       activity = [
         ...activity.map((e) => e.id !== id),
