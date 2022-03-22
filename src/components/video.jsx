@@ -5,7 +5,8 @@ function Video({ id, stream }) {
   const ref = useRef();
   useEffect(() => {
     setTimeout(() => {
-      ref.current.srcObject = stream;
+      ref.current.src = window.URL.createObjectURL(stream);
+      // ref.current.srcObject = stream;
     }, 500);
   }, [stream]);
 
