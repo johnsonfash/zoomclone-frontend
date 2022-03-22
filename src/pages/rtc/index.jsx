@@ -196,10 +196,9 @@ function RTC() {
   // adding video stream to circles sliders
   // ref: (e) => (otherVideos.current[prev.length] = e)
   const addVideoStream = (stream, peerID, userID, userName, userImage) => {
-    console.log("audio", stream.getAudioTracks()[0].getCapabilities());
-    console.log("video", stream.getVideoTracks()[0].getCapabilities());
     list.push({ id: userID, image: userImage });
     setCalling(false);
+    mainVideo.current.srcObject = stream;
     if (activity.find((e) => e.id === userID)) {
       setPeople((prev) => {
         return prev.filter((e) => e.id !== userID);
