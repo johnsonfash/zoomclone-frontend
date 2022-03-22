@@ -161,7 +161,6 @@ function RTC() {
 
   const startVideo = () => {
     mediaStream((stream) => {
-      console.dir(stream);
       setStream(stream);
       setLoading(false);
       setMainVid((prev) => {

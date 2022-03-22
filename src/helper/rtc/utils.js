@@ -28,7 +28,10 @@ export const mediaStream = async (callback, audio = true, video = true) => {
   //   callback(stream)
   // })
   window.navigator.mediaDevices.getUserMedia({
-    audio, video
+    audio: {
+      echoCancellation: true,
+      noiseSuppression:true
+    }, video
   }).then((stream) => {
     callback(stream)
   })
