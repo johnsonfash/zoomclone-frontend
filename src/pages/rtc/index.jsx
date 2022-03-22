@@ -161,7 +161,7 @@ function RTC() {
 
   const startVideo = () => {
     mediaStream((stream) => {
-      console.dir(stream)
+      console.dir(stream);
       setStream(stream);
       setLoading(false);
       setMainVid((prev) => {
@@ -197,7 +197,8 @@ function RTC() {
   // adding video stream to circles sliders
   // ref: (e) => (otherVideos.current[prev.length] = e)
   const addVideoStream = (stream, peerID, userID, userName, userImage) => {
-    console.dir(stream);
+    console.log("audio", stream.getAudioTracks()[0].getCapabilities());
+    console.log("video", stream.getVideoTracks()[0].getCapabilities());
     list.push({ id: userID, image: userImage });
     setCalling(false);
     if (activity.find((e) => e.id === userID)) {
