@@ -192,7 +192,7 @@ function Join() {
                   onChange={readImage}
                   accept="image/*"
                   className="pointer"
-                  required={true}
+                  required={false}
                   type="file"
                   block
                 />
