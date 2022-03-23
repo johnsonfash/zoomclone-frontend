@@ -16,14 +16,8 @@ function Slider({ item, actv, clickedImage, className, imageStructureClass, imag
 
   useEffect(() => {
     setActivity(actv)
-    console.log(actv);
   }, [actv]);
 
-  // const clickedImage = (e) => {
-  //   let val = e.target.id;
-  //   setSelect(val)
-  //   onChange && onChange(val);
-  // }
 
   return (
     <div className={`overflowSlider ${className}`} style={style}>
