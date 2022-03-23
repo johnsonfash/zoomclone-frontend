@@ -40,7 +40,7 @@ const peer = new Peer(undefined, {
   path: "/peerjs",
   host: "zuum-backend.herokuapp.com",
   secure: true,
-  port: "433",
+  port: "",
 });
 const list = [];
 
