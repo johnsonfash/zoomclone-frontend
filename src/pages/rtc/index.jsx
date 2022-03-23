@@ -198,7 +198,6 @@ function RTC() {
   const addVideoStream = (stream, peerID, userID, userName, userImage) => {
     list.push({ id: userID, image: userImage });
     setCalling(false);
-    mainVideo.current.srcObject = stream;
     if (activity.find((e) => e.id === userID)) {
       setPeople((prev) => {
         return prev.filter((e) => e.id !== userID);
