@@ -4,9 +4,10 @@ import { useRef } from "react";
 function Video({ id, stream }) {
   const ref = useRef();
   useEffect(() => {
-    setTimeout(() => {
-      ref.current.srcObject = stream;
-    }, 500);
+    ref.current.srcObject = stream;
+    ref.current.addEventListener("loadedmetadata", () => {
+      ref.current.play();
+    });
   }, [stream]);
 
   return (
@@ -14,7 +15,6 @@ function Video({ id, stream }) {
       controls={false}
       playsInline={true}
       muted={false}
-      autoPlay={true}
       ref={ref}
       id={id}
     />
