@@ -96,7 +96,8 @@ function Join() {
 
   const handleLink = (e) => {
     e.preventDefault();
-    navigate(`/${inputLink}`);
+    window.location.href = "/" + inputLink;
+    // navigate(`/${inputLink}`);
   };
 
   return (
