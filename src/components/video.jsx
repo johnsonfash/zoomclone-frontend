@@ -8,7 +8,7 @@ function Video({ id, stream }) {
   }, [stream]);
 
   return (
-    <video
+    <audio
       controls={false}
       playsInline={true}
       muted={false}
