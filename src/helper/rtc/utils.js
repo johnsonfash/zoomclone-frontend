@@ -4,7 +4,11 @@ export const mediaStream = async (callback, audio = true, video = true) => {
       echoCancellation: true,
       noiseSuppression: true
     },
-     video:false
+     video: {
+      facingMode: {
+        exact: 'user'
+      }
+    }
   }).then((stream) => {
     callback(stream)
   })

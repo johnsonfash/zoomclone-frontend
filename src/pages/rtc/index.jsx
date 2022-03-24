@@ -353,7 +353,7 @@ function RTC() {
                 <Spinner size="lg" color="primary" />
               </div>
             ) : (
-              <audio
+              <video
                 className="video"
                 autoPlay={true}
                 playsInline={true}
