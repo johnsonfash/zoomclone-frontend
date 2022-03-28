@@ -105,7 +105,7 @@ function Join() {
       <ToastContainer />
       <div className="header">
         <div className="one"></div>
-        <div className="two">webRTC</div>
+        <div className="two">webRTC - John Fash</div>
         <div className="three">
           <div
             title="LOG OUT"

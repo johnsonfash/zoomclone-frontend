@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"name": "react-nodejs-webrtc",
+			"path": ".."
+		},
+		{
+			"path": "..\\..\\webrtc"
+		}
+	],
+	"settings": {}
+}
