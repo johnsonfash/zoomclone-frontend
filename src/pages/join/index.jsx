@@ -90,7 +90,7 @@ function Join() {
   };
 
   const copyText = () => {
-    copy(`https://zuum.herokuapp.com/${link}`);
+    copy(`https://zuum.onrender.com/${link}`);
     showTab();
   };
 
@@ -150,7 +150,7 @@ function Join() {
             {bP ? (
               <div className="linkC">
                 <span className="link">
-                  {`https://zuum.herokuapp.com/${link}`}
+                  {`https://zuum.onrender.com/${link}`}
                 </span>
                 <span className="copyButton pointer" onClick={copyText}>
                   <FontAwesomeIcon icon={faCopy} />
