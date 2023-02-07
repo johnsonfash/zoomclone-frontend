@@ -34,7 +34,7 @@ import PullToRefresh from "react-simple-pull-to-refresh";
 
 var timer;
 var activity = [];
-const socket = io("https://zuum-backend.herokuapp.com");
+const socket = io("https://zuum-backend.onrender.com");
 const myID = getID();
 const peer = new Peer(undefined, {
   path: "/peerjs",
@@ -327,7 +327,7 @@ function RTC() {
           <div className="link">
             {url}
             <span
-              onClick={() => copy(`https://zuum.herokuapp.com/${url}`)}
+              onClick={() => copy(`https://zuum.onrender.com/${url}`)}
               title="click to copy"
               className="pointer"
             >
